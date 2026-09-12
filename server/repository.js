@@ -4,7 +4,7 @@ const { portalError } = require('./errors');
 
 const iso = (value) => value ? new Date(value).toISOString() : null;
 function profile(row) {
-  return row ? { id: row.user_id, name: row.name, email: row.email, role: row.role, goal: row.goal, timezone: row.timezone } : null;
+  return row ? { id: row.user_id, name: row.name, email: row.email, role: row.role, goal: row.goal, timezone: row.timezone, isDemo: row.is_demo === true } : null;
 }
 function classroom(row, includeCode = false) {
   return row ? { id: row.id, name: row.name, ...(includeCode ? { code: row.code } : {}) } : null;
@@ -25,7 +25,7 @@ function createRepository({ env = process.env, sql: injectedSql } = {}) {
       const rows = await sql`INSERT INTO studygps_profiles (user_id, name, email, role)
         VALUES (${actor.id}, ${actor.name}, ${actor.email}, ${actor.role})
         ON CONFLICT (user_id) DO UPDATE SET email = EXCLUDED.email, role = EXCLUDED.role
-        RETURNING user_id, name, email, role, goal, timezone`;
+        RETURNING user_id, name, email, role, goal, timezone, is_demo`;
       return profile(rows[0]);
     },
     async saveProfile(actorId, values) {
@@ -55,7 +55,7 @@ function createRepository({ env = process.env, sql: injectedSql } = {}) {
     },
     async getAssignedStudent(teacherId, studentId) {
       const sql = db();
-      const rows = await sql`SELECT p.user_id, p.name, p.email, p.role, p.goal, p.timezone
+      const rows = await sql`SELECT p.user_id, p.name, p.email, p.role, p.goal, p.timezone, p.is_demo
         FROM studygps_profiles p INNER JOIN studygps_enrollments e ON e.student_id=p.user_id
         INNER JOIN studygps_classrooms c ON c.id=e.classroom_id
         WHERE c.teacher_id=${teacherId} AND p.user_id=${studentId}`;
@@ -63,7 +63,7 @@ function createRepository({ env = process.env, sql: injectedSql } = {}) {
     },
     async listStudents(teacherId) {
       const sql = db();
-      const rows = await sql`SELECT p.user_id, p.name, p.email, p.goal,
+      const rows = await sql`SELECT p.user_id, p.name, p.email, p.goal, p.is_demo,
         l.plan->>'overall_score' AS overall_score, l.plan->'priorities' AS priorities,
         l.completed_task_ids, l.updated_at
         FROM studygps_profiles p INNER JOIN studygps_enrollments e ON e.student_id=p.user_id
@@ -71,7 +71,7 @@ function createRepository({ env = process.env, sql: injectedSql } = {}) {
         LEFT JOIN studygps_learning l ON l.student_id=p.user_id
         WHERE c.teacher_id=${teacherId} ORDER BY p.name, p.user_id LIMIT 1000`;
       return rows.map((row) => ({
-        id: row.user_id, name: row.name, email: row.email, goal: row.goal,
+        id: row.user_id, name: row.name, email: row.email, goal: row.goal, isDemo: row.is_demo === true,
         overallScore: row.overall_score === null ? null : Number(row.overall_score),
         completedTasks: row.completed_task_ids?.length ?? 0, totalTasks: row.priorities?.length ?? 0,
         focusTopic: row.priorities?.[0]?.topic_id ?? null, updatedAt: iso(row.updated_at),

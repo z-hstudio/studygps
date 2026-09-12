@@ -14,6 +14,8 @@ New accounts default to student. The deployment operator can configure `STUDYGPS
 
 Use Node.js 22: `npm ci`, configure `.env.local` from `.env.example`, then `npm run db:migrate`. `npm run dev` starts the local site at `http://127.0.0.1:3040`. `npm test` checks engine, HTTP, authentication, isolation and UI behavior; `npm run build` bundles only public assets and the public Clerk client. Secret keys and database URLs stay server-side. The pure analysis engine still works independently without Clerk, Neon or model credentials.
 
+For a live teacher presentation, see the [six synthetic classroom scenarios and two-minute bilingual walkthrough](docs/classroom-demo.md). The operator-only seed command targets a verified administrator classroom, labels synthetic records explicitly, and preserves existing data when rerun. It creates no Clerk login accounts.
+
 ## Thermodynamics demo and API
 
 The public Analysis / Study Plan Engine demo is available at **[studygps-five.vercel.app/demo.html](https://studygps-five.vercel.app/demo.html)**. Choose [English](https://studygps-five.vercel.app/demo.html?lang=en) or [中文](https://studygps-five.vercel.app/demo.html?lang=zh). It includes localized explanations, errors, dates and four micro-exercises, a time-budget comparison using matched scores, a same-score/different-route demonstration and exact reassessment changes. The public demo is stateless and does not access private account records.
