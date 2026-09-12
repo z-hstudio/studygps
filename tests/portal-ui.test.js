@@ -40,7 +40,7 @@ function teacherView() {
 }
 function detailView(actor, studentId) {
   return {
-    ...actor, student: user(studentId), learning: learning(), advice: [],
+    ...actor, student: { ...user(studentId), isDemo: actor.students.find(student => student.id === studentId)?.isDemo === true }, learning: learning(), advice: [],
     recommendation: {
       topicId: 'rankine_cycle', source: 'deterministic-study-engine',
       reason: { zh: '朗肯循环与目标存在差距。', en: 'Rankine cycle has a gap to target.' },
@@ -332,4 +332,58 @@ test('sign-up cleanup is isolated from a new mount while the old React tree is s
   assert.doesNotThrow(() => app.flushUnmounts());
   assert.equal(signUpHost.childNodes.length, 0);
   assert.equal(nextSignUpHost.textContent, 'TEST SIGN UP');
+});
+
+
+test('synthetic students are explicitly marked in the roster and classroom totals are disclosed', async t => {
+  const view = teacherView();
+  view.students[0].isDemo = true;
+  view.students[1].isDemo = false;
+  const app = await launch(t, { view });
+  const demoCard = app.document.querySelector('[data-student-id="student-a"]');
+  const realCard = app.document.querySelector('[data-student-id="student-b"]');
+  assert.equal(demoCard.querySelector('.demo-badge').textContent, 'Demo');
+  assert.equal(realCard.querySelector('.demo-badge'), null);
+  const disclosure = app.document.querySelector('.demo-disclosure');
+  assert.match(disclosure.textContent, /synthetic records/);
+  assert.match(disclosure.textContent, /include 1 of these records/);
+  assert.match(disclosure.textContent, /not measured product outcomes/);
+  assert.match(disclosure.textContent, /Real student records stay separate/);
+  assert.equal(app.document.getElementById('auth-environment').hidden, false);
+
+  demoCard.click();
+  await tick();
+  assert.equal(app.document.querySelector('#student-detail .demo-badge').textContent, 'Demo');
+  realCard.click();
+  await tick();
+  assert.equal(app.document.querySelector('#student-detail .demo-badge'), null);
+  assert.equal(app.document.getElementById('student-detail-heading').textContent, 'student-b');
+});
+
+test('demo markers and outcome disclosure are localized in Chinese without changing student data', async t => {
+  const view = teacherView();
+  view.students[0].isDemo = true;
+  const app = await launch(t, { view, url: 'https://studygps.example/portal.html?lang=zh' });
+  const card = app.document.querySelector('[data-student-id="student-a"]');
+  assert.equal(card.querySelector('.demo-badge').textContent, '演示数据');
+  assert.match(app.document.querySelector('.demo-disclosure').textContent, /包含 1 条演示记录/);
+  assert.match(app.document.querySelector('.demo-disclosure').textContent, /成绩变化不代表产品实测成效/);
+  card.click();
+  await tick();
+  assert.equal(app.document.querySelector('#student-detail .demo-badge').textContent, '演示数据');
+  assert.equal(app.document.getElementById('student-detail-heading').textContent, 'student-a');
+  assert.equal(app.requests.filter(request => request.settings.method === 'POST').length, 0);
+});
+
+test('real-only classrooms do not receive demo labels or a synthetic-data disclosure', async t => {
+  const view = teacherView();
+  view.students[0].name = 'Demo is part of my real name';
+  view.students[0].isDemo = false;
+  const app = await launch(t, { view });
+  assert.equal(app.document.querySelector('.demo-disclosure'), null);
+  assert.equal(app.document.querySelector('.demo-badge'), null);
+  app.document.querySelector('[data-student-id="student-a"]').click();
+  await tick();
+  assert.equal(app.document.querySelector('#student-detail .demo-badge'), null);
+  assert.equal(app.document.getElementById('auth-environment').hidden, false);
 });

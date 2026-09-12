@@ -49,3 +49,6 @@ CREATE TABLE IF NOT EXISTS studygps_advice (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS studygps_advice_student_idx ON studygps_advice(student_id, created_at DESC);
+
+-- Explicit fixture provenance, never writable through the public profile API.
+ALTER TABLE studygps_profiles ADD COLUMN IF NOT EXISTS is_demo BOOLEAN NOT NULL DEFAULT false;

@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "students": [
+    {
+      "key": "alex-chen",
+      "name": "Alex Chen · 陈奕辰",
+      "goal": {
+        "zh": "【合成演示】弄清朗肯循环中各设备的能量流向，能独立算出净功与效率。",
+        "en": "[Synthetic demo] Explain energy flow through each Rankine-cycle device and calculate net work and efficiency."
+      },
+      "targetScore": 80,
+      "minutes": 180,
+      "completionCount": 1,
+      "assessments": [
+        {"daysAgo": 21, "scores": {"first_law": 72, "second_law": 48, "entropy": 22, "rankine_cycle": 30}},
+        {"daysAgo": 14, "scores": {"first_law": 78, "second_law": 55, "entropy": 26, "rankine_cycle": 38}},
+        {"daysAgo": 7, "scores": {"first_law": 82, "second_law": 60, "entropy": 30, "rankine_cycle": 44}},
+        {"daysAgo": 0, "scores": {"first_law": 85, "second_law": 65, "entropy": 35, "rankine_cycle": 50}}
+      ],
+      "advice": [
+        {
+          "daysAgo": 3,
+          "focusTopic": "rankine_cycle",
+          "message": {
+            "zh": "先画泵、锅炉、汽轮机和冷凝器，分别标出吸热、放热、输入功和输出功，再检查循环方向。",
+            "en": "Sketch the four cycle devices. Label heat in, heat out, work in and work out; then check the cycle direction."
+          }
+        },
+        {
+          "daysAgo": 0,
+          "focusTopic": "rankine_cycle",
+          "message": {
+            "zh": "用今天的60分钟完成一道朗肯循环题：先列各设备的能量式，再求净功与效率，最后说明为何效率小于1。",
+            "en": "Use 60 minutes for one Rankine problem: write each energy balance, find net work and efficiency, then check units."
+          }
+        }
+      ]
+    },
+    {
+      "key": "sarah-lin",
+      "name": "Sarah Lin · 林知夏",
+      "goal": {
+        "zh": "【合成演示】分清热量与功的正负号，准确建立闭口系统的能量平衡。",
+        "en": "[Synthetic demo] Use consistent heat and work signs to set up a closed-system energy balance."
+      },
+      "targetScore": 80,
+      "minutes": 180,
+      "completionCount": 0,
+      "assessments": [
+        {"daysAgo": 21, "scores": {"first_law": 32, "second_law": 50, "entropy": 20, "rankine_cycle": 74}},
+        {"daysAgo": 14, "scores": {"first_law": 38, "second_law": 56, "entropy": 25, "rankine_cycle": 78}},
+        {"daysAgo": 7, "scores": {"first_law": 44, "second_law": 61, "entropy": 30, "rankine_cycle": 82}},
+        {"daysAgo": 0, "scores": {"first_law": 50, "second_law": 65, "entropy": 35, "rankine_cycle": 85}}
+      ],
+      "advice": [
+        {
+          "daysAgo": 3,
+          "focusTopic": "first_law",
+          "message": {
+            "zh": "每道题先画系统边界，用箭头标出能量进出，再写明自己的热量与功的正负号约定。",
+            "en": "Draw the system boundary first. Add arrows for energy flows and state your heat and work sign convention."
+          }
+        },
+        {
+          "daysAgo": 0,
+          "focusTopic": "first_law",
+          "message": {
+            "zh": "先做一道加热题和一道压缩题，每次按“系统边界→正负号→能量式→单位”检查，不必重复已掌握的循环计算。",
+            "en": "Try one heating and one compression problem. Check boundary, signs, energy balance and units in that order."
+          }
+        }
+      ]
+    },
+    {
+      "key": "maya-zhou",
+      "name": "Maya Zhou · 周沐禾",
+      "goal": {
+        "zh": "【合成演示】把逐步掌握的概念串起来，能用自己的话解释每一步计算。",
+        "en": "[Synthetic demo] Connect the concepts and explain the reasoning behind each calculation in my own words."
+      },
+      "targetScore": 80,
+      "minutes": 180,
+      "completionCount": 1,
+      "assessments": [
+        {"daysAgo": 21, "scores": {"first_law": 35, "second_law": 40, "entropy": 30, "rankine_cycle": 35}},
+        {"daysAgo": 14, "scores": {"first_law": 48, "second_law": 50, "entropy": 42, "rankine_cycle": 50}},
+        {"daysAgo": 7, "scores": {"first_law": 62, "second_law": 65, "entropy": 50, "rankine_cycle": 63}},
+        {"daysAgo": 0, "scores": {"first_law": 75, "second_law": 78, "entropy": 65, "rankine_cycle": 76}}
+      ],
+      "advice": [
+        {
+          "daysAgo": 3,
+          "focusTopic": "entropy",
+          "message": {
+            "zh": "做两道熵变题，每道先把温度换成开尔文，写清单位，并区分系统熵变与总熵变。",
+            "en": "Try two entropy problems. Convert temperatures to kelvin and distinguish system entropy from total entropy."
+          }
+        },
+        {
+          "daysAgo": 0,
+          "focusTopic": "first_law",
+          "message": {
+            "zh": "四次演示记录呈上升趋势。今天先复核一道第一定律错题，再口头解释能量守恒；记录思路，不只记录答案。",
+            "en": "Revisit one first-law error. Explain energy conservation aloud and record your reasoning as well as the answer."
+          }
+        }
+      ]
+    },
+    {
+      "key": "noah-xu",
+      "name": "Noah Xu · 许景行",
+      "goal": {
+        "zh": "【合成演示】近期练习有回落，希望先找出卡住的概念，再恢复稳定的学习节奏。",
+        "en": "[Synthetic demo] Identify the concepts behind my recent lower scores and rebuild a manageable study routine."
+      },
+      "targetScore": 85,
+      "minutes": 120,
+      "completionCount": 0,
+      "assessments": [
+        {"daysAgo": 21, "scores": {"first_law": 82, "second_law": 80, "entropy": 76, "rankine_cycle": 79}},
+        {"daysAgo": 14, "scores": {"first_law": 78, "second_law": 73, "entropy": 65, "rankine_cycle": 75}},
+        {"daysAgo": 7, "scores": {"first_law": 68, "second_law": 62, "entropy": 55, "rankine_cycle": 67}},
+        {"daysAgo": 0, "scores": {"first_law": 58, "second_law": 52, "entropy": 45, "rankine_cycle": 60}}
+      ],
+      "advice": [
+        {
+          "daysAgo": 3,
+          "focusTopic": "second_law",
+          "message": {
+            "zh": "最近两次练习比之前低，先一起看一道错题，区分是概念、单位还是计算问题；再确认你这周可用的时间。",
+            "en": "Review one recent error together: concept, units or arithmetic? Then check how much study time fits this week."
+          }
+        },
+        {
+          "daysAgo": 0,
+          "focusTopic": "second_law",
+          "message": {
+            "zh": "先用30分钟完成一道卡诺效率题，温度统一用开尔文，再检查结果是否越过理论上限；把卡住的一步带来讨论。",
+            "en": "Start with 30 minutes on one Carnot problem. Use kelvin, check the efficiency limit and flag the step you find hard."
+          }
+        }
+      ]
+    },
+    {
+      "key": "lina-guo",
+      "name": "Lina Guo · 郭映棠",
+      "goal": {
+        "zh": "【合成演示】本周只能安排60分钟，希望先完成最值得投入的一项复习。",
+        "en": "[Synthetic demo] I have only 60 minutes this week and want one focused revision task that fits."
+      },
+      "targetScore": 80,
+      "minutes": 60,
+      "completionCount": 0,
+      "assessments": [
+        {"daysAgo": 21, "scores": {"first_law": 54, "second_law": 48, "entropy": 38, "rankine_cycle": 42}},
+        {"daysAgo": 14, "scores": {"first_law": 58, "second_law": 52, "entropy": 42, "rankine_cycle": 46}},
+        {"daysAgo": 7, "scores": {"first_law": 60, "second_law": 55, "entropy": 46, "rankine_cycle": 50}},
+        {"daysAgo": 0, "scores": {"first_law": 62, "second_law": 58, "entropy": 50, "rankine_cycle": 55}}
+      ],
+      "advice": [
+        {
+          "daysAgo": 3,
+          "focusTopic": "rankine_cycle",
+          "message": {
+            "zh": "先把本周60分钟留给朗肯循环，准备好四设备示意图和一道例题，减少开始前的准备时间。",
+            "en": "Reserve this week's 60 minutes for the Rankine cycle. Have a four-device sketch and one worked example ready."
+          }
+        },
+        {
+          "daysAgo": 0,
+          "focusTopic": "rankine_cycle",
+          "message": {
+            "zh": "这60分钟分成：15分钟画循环、30分钟独立算一道题、15分钟核对单位与效率。完成后记下一处仍不确定的地方。",
+            "en": "Spend 15 minutes sketching, 30 solving one cycle problem and 15 checking units and efficiency. Note one uncertainty."
+          }
+        }
+      ]
+    },
+    {
+      "key": "ethan-song",
+      "name": "Ethan Song · 宋予安",
+      "goal": {
+        "zh": "【合成演示】各模块达到85分目标后，保持理解深度，并练习向同学解释解题思路。",
+        "en": "[Synthetic demo] After reaching 85 in every topic, deepen understanding by explaining solutions to a classmate."
+      },
+      "targetScore": 85,
+      "minutes": 120,
+      "completionCount": 0,
+      "assessments": [
+        {"daysAgo": 21, "scores": {"first_law": 70, "second_law": 73, "entropy": 65, "rankine_cycle": 72}},
+        {"daysAgo": 14, "scores": {"first_law": 78, "second_law": 80, "entropy": 74, "rankine_cycle": 80}},
+        {"daysAgo": 7, "scores": {"first_law": 84, "second_law": 85, "entropy": 82, "rankine_cycle": 86}},
+        {"daysAgo": 0, "scores": {"first_law": 88, "second_law": 90, "entropy": 86, "rankine_cycle": 92}}
+      ],
+      "advice": [
+        {
+          "daysAgo": 3,
+          "focusTopic": "entropy",
+          "message": {
+            "zh": "熵的记录仍略低于目标，挑一道总熵变判断题，说明为什么系统熵可以减少而总熵不能为负。",
+            "en": "Try one total-entropy question. Explain how system entropy can fall while total entropy change stays non-negative."
+          }
+        },
+        {
+          "daysAgo": 0,
+          "focusTopic": "entropy",
+          "message": {
+            "zh": "本次四个模块都达到85分目标，系统不再安排补弱任务。可自选一道综合题讲给同学听，这属于拓展建议。",
+            "en": "Every topic meets 85, so no remedial tasks are assigned. Optional extension: explain one mixed problem to a peer."
+          }
+        }
+      ]
+    }
+  ]
+}
