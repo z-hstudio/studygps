@@ -1,0 +1,14 @@
+{
+  "student_id": "alex",
+  "course_id": "thermodynamics_demo",
+  "assessment_id": "quiz_02",
+  "target_score": 80,
+  "available_minutes": 180,
+  "exam_date": "2026-09-20",
+  "topic_scores": {
+    "first_law": 85,
+    "second_law": 62,
+    "entropy": 40,
+    "rankine_cycle": 78
+  }
+}
