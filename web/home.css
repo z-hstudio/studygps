@@ -25,3 +25,4 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.hero-art{transform:none!important;will-change:auto}}
 
 .mini-route-labels{display:grid;grid-template-columns:repeat(auto-fit,minmax(3em,1fr))}
+html[lang=en] .closing h2 em{display:block}
