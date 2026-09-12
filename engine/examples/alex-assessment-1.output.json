@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "student_id": "alex",
+  "course_id": "thermodynamics_demo",
+  "assessment_id": "quiz_01",
+  "exam_date": "2026-09-20",
+  "status": "ready",
+  "overall_score": 63.5,
+  "overall_score_basis": "configured_importance_weighted_assessment",
+  "target_score": 80,
+  "available_minutes": 180,
+  "total_planned_minutes": 180,
+  "unused_minutes": 0,
+  "topic_analysis": [
+    {
+      "topic_id": "first_law",
+      "topic_name": "First Law",
+      "observed_score": 85,
+      "target_gap": 0,
+      "importance": 0.3,
+      "estimated_minutes": 60,
+      "priority_score": 0
+    },
+    {
+      "topic_id": "second_law",
+      "topic_name": "Second Law",
+      "observed_score": 65,
+      "target_gap": 15,
+      "importance": 0.3,
+      "estimated_minutes": 60,
+      "priority_score": 4.5
+    },
+    {
+      "topic_id": "entropy",
+      "topic_name": "Entropy",
+      "observed_score": 35,
+      "target_gap": 45,
+      "importance": 0.1,
+      "estimated_minutes": 90,
+      "priority_score": 3
+    },
+    {
+      "topic_id": "rankine_cycle",
+      "topic_name": "Rankine Cycle",
+      "observed_score": 50,
+      "target_gap": 30,
+      "importance": 0.3,
+      "estimated_minutes": 60,
+      "priority_score": 9
+    }
+  ],
+  "priorities": [
+    {
+      "task_id": "studygps:remedial:alex:thermodynamics_demo:rankine_cycle",
+      "task_type": "remedial",
+      "topic_id": "rankine_cycle",
+      "topic_name": "Rankine Cycle",
+      "priority": 1,
+      "duration_minutes": 60,
+      "estimated_minutes": 60,
+      "is_partial": false,
+      "resource_id": "demo_rankine_cycle_v1",
+      "resource_ref": "engine/examples/resources/rankine-cycle.md",
+      "activity": "Label the four cycle devices and calculate work, heat input, and efficiency using the local demo exercises.",
+      "reason": "Review Rankine Cycle: your observed assessment score is 50%, 30 points below the 80% reference target. Configured importance 0.3 and estimate 60 minutes give a priority score of 9. Use demo_rankine_cycle_v1 for 60 minutes."
+    },
+    {
+      "task_id": "studygps:remedial:alex:thermodynamics_demo:second_law",
+      "task_type": "remedial",
+      "topic_id": "second_law",
+      "topic_name": "Second Law",
+      "priority": 2,
+      "duration_minutes": 60,
+      "estimated_minutes": 60,
+      "is_partial": false,
+      "resource_id": "demo_second_law_v1",
+      "resource_ref": "engine/examples/resources/second-law.md",
+      "activity": "Calculate the ideal heat-engine efficiency limit and check proposed efficiencies using the local demo exercises.",
+      "reason": "Review Second Law: your observed assessment score is 65%, 15 points below the 80% reference target. Configured importance 0.3 and estimate 60 minutes give a priority score of 4.5. Use demo_second_law_v1 for 60 minutes."
+    },
+    {
+      "task_id": "studygps:remedial:alex:thermodynamics_demo:entropy",
+      "task_type": "remedial",
+      "topic_id": "entropy",
+      "topic_name": "Entropy",
+      "priority": 3,
+      "duration_minutes": 60,
+      "estimated_minutes": 90,
+      "is_partial": true,
+      "resource_id": "demo_entropy_v1",
+      "resource_ref": "engine/examples/resources/entropy.md",
+      "activity": "Practise entropy-change calculations, units, and total-entropy checks using the local demo exercises.",
+      "reason": "Review Entropy: your observed assessment score is 35%, 45 points below the 80% reference target. Configured importance 0.1 and estimate 90 minutes give a priority score of 3. Use demo_entropy_v1 for 60 minutes. This is partial practice (60 of 90 configured minutes); work through as much of the activity as the allocated blocks allow."
+    }
+  ],
+  "warnings": [],
+  "summary": "Start with Rankine Cycle. The plan includes 3 remedial tasks totalling 180 of 180 available minutes, ordered by score gap, configured importance and estimated study time. At least one task is partial practice. Configured weights and study times are planning assumptions. This plan does not predict or guarantee an exam score.",
+  "explanation_mode": "template",
+  "plan_changed": true,
+  "changes": {
+    "type": "initial_plan",
+    "first_priority_changed": false,
+    "tasks_added": [
+      "studygps:remedial:alex:thermodynamics_demo:rankine_cycle",
+      "studygps:remedial:alex:thermodynamics_demo:second_law",
+      "studygps:remedial:alex:thermodynamics_demo:entropy"
+    ],
+    "tasks_removed": [],
+    "task_order_changed": false,
+    "duration_changes": [],
+    "resource_changes": [],
+    "activity_changes": [],
+    "task_details_changes": [],
+    "score_changes": []
+  }
+}

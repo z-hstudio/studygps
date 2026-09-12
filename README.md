@@ -1,8 +1,22 @@
 # StudyGPS
 
-StudyGPS is an n8n-powered study planner that uses grades to tell students what to study next.
+StudyGPS turns topic assessment results into an explainable revision plan within a fixed time budget, with an adapter for n8n.
 
 Built as a starting point for the n8n University Hackathon.
+
+## Thermodynamics demo and API
+
+The Analysis / Study Plan Engine is available at **[studygps-five.vercel.app](https://studygps-five.vercel.app)**. Choose [English](https://studygps-five.vercel.app/?lang=en) or [中文](https://studygps-five.vercel.app/?lang=zh). The website includes localized explanations, errors, dates and four micro-exercises, a time-budget comparison using matched scores, a same-score/different-route demonstration and exact reassessment changes. Locale preferences persist locally; scores and plans are not stored by the application.
+
+Call `POST /api/study-plan` with `{ input, course, previous_plan }` to use the same engine from n8n over HTTP. The API remains locale-neutral: UI translation never mutates the canonical task identity, content or comparison baseline. Learning translations are tied to fixed source signatures, so changed resources do not silently receive old activities.
+
+Use Node.js22 and run `npm ci` once for the jsdom development test dependency. Then `npm run dev` starts the local page, `npm test` runs all tests, and `npm run build` builds static assets. The engine and deployed runtime require no third-party runtime packages or model keys. Core-only checks remain available through `node --test engine/tests/*.test.js` without package installation.
+
+See [the engine contract](engine/README.md), [English handoff](engine/HANDOFF.en.md), [中文交接](engine/HANDOFF.md), [bilingual demo guide](engine/DEMO-GUIDE.md), [originality research](engine/NOVELTY.md), and [deployment verification record](engine/DEPLOYMENT.md). The website calls a real API; n8n/Calendar/Gmail integration is still unverified. There are no LLM/RAG calls, persistent accounts, grade-gain predictions or claims of worldwide novelty.
+
+## Original starter reference
+
+The sections below document the original priority-only starter in `src/priority.js`. Its simpler formula and planned input form describe that legacy module, not the current time-aware engine and hosted interface above. Existing starter files are preserved.
 
 ## Problem
 

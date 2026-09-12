@@ -1,0 +1,162 @@
+{
+  "first_law": {
+    "en": {
+      "title": "Follow the energy",
+      "kicker": "First Law · one idea, one check",
+      "concept": "For a closed system, ignoring kinetic and potential energy changes: ΔU = Q − W. Heat entering counts as positive Q; work done by the system counts as positive W.",
+      "steps": [
+        "A system receives 120 kJ of heat: write Q = +120 kJ.",
+        "It does 45 kJ of work: write W = +45 kJ.",
+        "Subtract the work: ΔU = 120 − 45 = 75 kJ. Its internal energy increases."
+      ],
+      "question": "Now the system loses 30 kJ of heat, while 20 kJ of work is done on it. What is ΔU?",
+      "options": [
+        "+10 kJ",
+        "−10 kJ",
+        "−50 kJ"
+      ],
+      "correctIndex": 1,
+      "feedback": "The answer is −10 kJ. Heat leaves, so Q = −30 kJ. Work is done on the system, so W = −20 kJ. Therefore ΔU = −30 − (−20) = −10 kJ.",
+      "sourceNote": "Adapted from demo_first_law_v1, Block 1. Original, unreviewed StudyGPS practice; not official course material or an instructor-approved assessment. Values are illustrative."
+    },
+    "zh": {
+      "title": "跟着能量走一遍",
+      "kicker": "第一定律 · 学一点，试一题",
+      "concept": "对封闭系统，忽略动能和势能变化时：ΔU = Q − W。热量流入系统，Q 取正；系统对外做功，W 取正。",
+      "steps": [
+        "系统吸收 120 kJ 的热量，先写下 Q = +120 kJ。",
+        "系统对外做功 45 kJ，再写下 W = +45 kJ。",
+        "用吸收的热量减去对外做的功：ΔU = 120 − 45 = 75 kJ，内能增加。"
+      ],
+      "question": "换一种情况：系统放出 30 kJ 的热量，同时外界对系统做功 20 kJ。ΔU 是多少？",
+      "options": [
+        "+10 kJ",
+        "−10 kJ",
+        "−50 kJ"
+      ],
+      "correctIndex": 1,
+      "feedback": "答案是 −10 kJ。热量流出，所以 Q = −30 kJ；外界对系统做功，所以 W = −20 kJ。代入得到 ΔU = −30 − (−20) = −10 kJ。",
+      "sourceNote": "改编自 demo_first_law_v1 第 1 学习块。StudyGPS 原创演示练习，尚未经教师审核，不是官方课程材料或正式测评；数值仅用于示例。"
+    }
+  },
+  "second_law": {
+    "en": {
+      "title": "Check the efficiency ceiling",
+      "kicker": "Second Law · one idea, one check",
+      "concept": "For a heat engine between two constant-temperature reservoirs, the reversible efficiency limit is 1 − T_cold / T_hot. Use kelvin, with T_hot > T_cold > 0. This is a limit, not a prediction.",
+      "steps": [
+        "Take a hot reservoir at 600 K and a cold reservoir at 300 K.",
+        "Find the temperature ratio: 300 / 600 = 0.5.",
+        "Subtract from 1: the efficiency limit is 0.5, or 50%."
+      ],
+      "question": "An engine operating between these same reservoirs claims 60% efficiency. What does this check tell you?",
+      "options": [
+        "The claim passes because 60% is below 100%.",
+        "The engine must reach 60% if its energy balance works.",
+        "The claim exceeds the 50% limit for these reservoirs."
+      ],
+      "correctIndex": 2,
+      "feedback": "The 60% claim exceeds 1 − 300 / 600 = 50%. Balancing energy alone is not enough. A 40% claim would be below this limit, but that alone would not prove the design works.",
+      "sourceNote": "Adapted from demo_second_law_v1, Block 1 and its worked checks. Original, unreviewed StudyGPS practice; not official course material or an instructor-approved assessment. Values are illustrative."
+    },
+    "zh": {
+      "title": "先看看效率的上限",
+      "kicker": "第二定律 · 学一点，试一题",
+      "concept": "热机在两个恒温热源之间工作时，可逆效率上限是 1 − T冷 / T热。温度用开尔文 K，且 T热 > T冷 > 0。这是上限，不是实际效率预测。",
+      "steps": [
+        "设高温热源为 600 K，低温热源为 300 K。",
+        "先算温度比：300 / 600 = 0.5。",
+        "再用 1 减去它：效率上限为 0.5，也就是 50%。"
+      ],
+      "question": "一台在这两个热源之间工作的热机声称效率有 60%。根据刚才的检查，可以得出什么结论？",
+      "options": [
+        "60% 低于 100%，所以通过检查。",
+        "只要能量收支平衡，就一定能达到 60%。",
+        "60% 超过了这两个热源对应的 50% 上限。"
+      ],
+      "correctIndex": 2,
+      "feedback": "60% 超过了 1 − 300 / 600 = 50% 的上限。仅仅满足能量收支平衡还不够。40% 虽低于这个上限，也不能只凭这一点证明设计可行。",
+      "sourceNote": "改编自 demo_second_law_v1 第 1 学习块及参考答案。StudyGPS 原创演示练习，尚未经教师审核，不是官方课程材料或正式测评；数值仅用于示例。"
+    }
+  },
+  "entropy": {
+    "en": {
+      "title": "Keep the sign and the unit",
+      "kicker": "Entropy · one idea, one check",
+      "concept": "For reversible heat transfer at a constant temperature, ΔS = Q_rev / T. Use heat in J, temperature in K, and entropy change in J/K. Heat entering is positive.",
+      "steps": [
+        "Add 600 J reversibly while the temperature stays at 300 K.",
+        "Divide heat by temperature: ΔS = 600 / 300 = 2.",
+        "Include the unit: +2 J/K. The system's entropy increases."
+      ],
+      "question": "If 900 J is reversibly removed at a constant 300 K, what is the system's entropy change?",
+      "options": [
+        "−3 J/K",
+        "+3 J/K",
+        "−3 J"
+      ],
+      "correctIndex": 0,
+      "feedback": "The answer is −3 J/K. Heat is removed, so Q_rev = −900 J; −900 / 300 = −3 J/K. A decrease in the system's entropy alone does not tell you the total change: the surroundings also count.",
+      "sourceNote": "Adapted from demo_entropy_v1, Blocks 1 and 3. Original, unreviewed StudyGPS practice; not official course material or an instructor-approved assessment. The formula here requires reversible heat transfer at constant temperature."
+    },
+    "zh": {
+      "title": "符号和单位，别漏掉",
+      "kicker": "熵 · 学一点，试一题",
+      "concept": "可逆传热且温度恒定时，ΔS = Q_rev / T。热量用 J，温度用 K，熵变用 J/K。热量流入时取正值。",
+      "steps": [
+        "温度保持 300 K，系统通过可逆过程吸收 600 J 热量。",
+        "用热量除以温度：ΔS = 600 / 300 = 2。",
+        "补上单位：+2 J/K。系统的熵增加了。"
+      ],
+      "question": "如果系统在恒定的 300 K 下，通过可逆过程放出 900 J 热量，系统的熵变是多少？",
+      "options": [
+        "−3 J/K",
+        "+3 J/K",
+        "−3 J"
+      ],
+      "correctIndex": 0,
+      "feedback": "答案是 −3 J/K。放出热量，所以 Q_rev = −900 J；计算得到 −900 / 300 = −3 J/K。系统的熵减少，不代表总熵减少，还要把周围环境的熵变算进去。",
+      "sourceNote": "改编自 demo_entropy_v1 第 1、3 学习块。StudyGPS 原创演示练习，尚未经教师审核，不是官方课程材料或正式测评。这里的公式只用于恒温、可逆传热的情形。"
+    }
+  },
+  "rankine_cycle": {
+    "en": {
+      "title": "Remember the pump",
+      "kicker": "Rankine Cycle · one idea, one check",
+      "concept": "Net work is turbine output minus pump input. Here, assume steady operation, negligible kinetic and potential energy changes, no heat transfer in the pump/turbine, and no shaft work in the boiler/condenser.",
+      "steps": [
+        "Use the supplied h1 = 200, h2 = 220, h3 = 2,220 and h4 = 1,420 kJ/kg. Pump input: h2 − h1 = 20 kJ/kg.",
+        "Turbine output: h3 − h4 = 800 kJ/kg. Subtract the pump input: net output = 780 kJ/kg.",
+        "Boiler heat input: h3 − h2 = 2,000 kJ/kg. Efficiency uses net output divided by heat input."
+      ],
+      "question": "For these supplied values, what is the cycle's thermal efficiency?",
+      "options": [
+        "40%: divide turbine output by heat input.",
+        "39%: divide net output by heat input.",
+        "41%: add pump input to turbine output first."
+      ],
+      "correctIndex": 1,
+      "feedback": "The answer is 39%: (800 − 20) / 2,000 = 0.39. The pump consumes work, so its 20 kJ/kg input must be subtracted. Using turbine output alone gives 40% and misses that input.",
+      "sourceNote": "Adapted from demo_rankine_cycle_v1, Blocks 1–2. Original, unreviewed StudyGPS practice; not official course material or an instructor-approved assessment. Enthalpies are synthetic arithmetic inputs, not steam-table data or a prediction of real plant efficiency."
+    },
+    "zh": {
+      "title": "别忘了水泵也要做功",
+      "kicker": "朗肯循环 · 学一点，试一题",
+      "concept": "净输出功 = 汽轮机输出功 − 水泵输入功。本题假设稳定运行、动能与势能变化可忽略，水泵和汽轮机不传热，锅炉和冷凝器无轴功。",
+      "steps": [
+        "给定 h1 = 200、h2 = 220、h3 = 2,220、h4 = 1,420 kJ/kg。水泵输入功：h2 − h1 = 20 kJ/kg。",
+        "汽轮机输出功：h3 − h4 = 800 kJ/kg。扣除水泵输入功，净输出为 780 kJ/kg。",
+        "锅炉输入热量：h3 − h2 = 2,000 kJ/kg。计算效率时，用净输出功除以输入热量。"
+      ],
+      "question": "根据这些给定数值，循环的热效率是多少？",
+      "options": [
+        "40%：汽轮机输出功除以输入热量。",
+        "39%：净输出功除以输入热量。",
+        "41%：先把水泵输入功加到汽轮机输出功上。"
+      ],
+      "correctIndex": 1,
+      "feedback": "答案是 39%：(800 − 20) / 2,000 = 0.39。水泵需要消耗功，所以要扣掉它的 20 kJ/kg 输入。只用汽轮机输出计算出的 40%，漏掉了这一项。",
+      "sourceNote": "改编自 demo_rankine_cycle_v1 第 1–2 学习块。StudyGPS 原创演示练习，尚未经教师审核，不是官方课程材料或正式测评。焓值是人工设定的算术数据，不是蒸汽表数据，也不预测真实电厂效率。"
+    }
+  }
+}

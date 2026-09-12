@@ -1,0 +1,3 @@
+# The repository ignores dist/ globally; this generated handoff is deliverable.
+!dist/
+!dist/n8n-code-node.js

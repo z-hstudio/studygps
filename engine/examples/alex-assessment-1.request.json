@@ -1,0 +1,58 @@
+{
+  "input": {
+    "student_id": "alex",
+    "course_id": "thermodynamics_demo",
+    "assessment_id": "quiz_01",
+    "target_score": 80,
+    "available_minutes": 180,
+    "exam_date": "2026-09-20",
+    "topic_scores": {
+      "first_law": 85,
+      "second_law": 65,
+      "entropy": 35,
+      "rankine_cycle": 50
+    }
+  },
+  "course": {
+    "course_id": "thermodynamics_demo",
+    "topics": [
+      {
+        "topic_id": "first_law",
+        "topic_name": "First Law",
+        "importance": 0.3,
+        "estimated_minutes": 60,
+        "resource_id": "demo_first_law_v1",
+        "resource_ref": "engine/examples/resources/first-law.md",
+        "activity": "Practise the closed-system energy balance and check the signs of heat and work using the local demo exercises."
+      },
+      {
+        "topic_id": "second_law",
+        "topic_name": "Second Law",
+        "importance": 0.3,
+        "estimated_minutes": 60,
+        "resource_id": "demo_second_law_v1",
+        "resource_ref": "engine/examples/resources/second-law.md",
+        "activity": "Calculate the ideal heat-engine efficiency limit and check proposed efficiencies using the local demo exercises."
+      },
+      {
+        "topic_id": "entropy",
+        "topic_name": "Entropy",
+        "importance": 0.1,
+        "estimated_minutes": 90,
+        "resource_id": "demo_entropy_v1",
+        "resource_ref": "engine/examples/resources/entropy.md",
+        "activity": "Practise entropy-change calculations, units, and total-entropy checks using the local demo exercises."
+      },
+      {
+        "topic_id": "rankine_cycle",
+        "topic_name": "Rankine Cycle",
+        "importance": 0.3,
+        "estimated_minutes": 60,
+        "resource_id": "demo_rankine_cycle_v1",
+        "resource_ref": "engine/examples/resources/rankine-cycle.md",
+        "activity": "Label the four cycle devices and calculate work, heat input, and efficiency using the local demo exercises."
+      }
+    ]
+  },
+  "previous_plan": null
+}
