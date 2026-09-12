@@ -3,15 +3,38 @@
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "public",
-  "functions": { "api/*.js": { "maxDuration": 10 } },
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 30
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://certain-boxer-9429.clerk.accounts.dev https://challenges.cloudflare.com https://*.protect.clerk.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://img.clerk.com; connect-src 'self' https://certain-boxer-9429.clerk.accounts.dev https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.protect.clerk.com:*; frame-src https://certain-boxer-9429.clerk.accounts.dev https://challenges.cloudflare.com https://*.protect.clerk.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+        }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/portal",
+      "destination": "/portal.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/demo.html"
     }
   ]
 }

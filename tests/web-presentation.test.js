@@ -20,7 +20,7 @@ const make = (index = 0,budget = 180,target = 80) => {
 
 test('locale dictionaries have identical complete keys, and every HTML translation resolves',() => {
   assert.deepEqual(Object.keys(P.strings.en).sort(),Object.keys(P.strings.zh).sort());
-  const doc = new JSDOM(fs.readFileSync(path.join(root,'web/index.html'),'utf8')).window.document;
+  const doc = new JSDOM(fs.readFileSync(path.join(root,'web/demo.html'),'utf8')).window.document;
   for (const attribute of ['data-i18n','data-i18n-aria','data-i18n-placeholder']) for (const el of doc.querySelectorAll('[' + attribute + ']')) {
     for (const lang of ['zh','en']) assert.ok(P.t(lang,el.getAttribute(attribute)),el.outerHTML);
   }
@@ -101,7 +101,7 @@ test('retained task resource/activity/details changes are all explained in both 
 });
 
 async function boot(options = {}) {
-  const dom = new JSDOM(fs.readFileSync(path.join(root,'web/index.html'),'utf8'),{url:'https://studygps.test/' + (options.query || ''),runScripts:'outside-only',pretendToBeVisual:true});
+  const dom = new JSDOM(fs.readFileSync(path.join(root,'web/demo.html'),'utf8'),{url:'https://studygps.test/demo.html' + (options.query || ''),runScripts:'outside-only',pretendToBeVisual:true});
   const w = dom.window, calls = [], errors = [];
   w.structuredClone = structuredClone;
   w.matchMedia = () => ({matches:true});

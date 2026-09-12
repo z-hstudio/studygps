@@ -25,3 +25,4 @@ Thumbs.db
 # Local Vercel link and generated static demo
 .vercel/
 public/
+.env*.local

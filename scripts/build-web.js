@@ -11,7 +11,9 @@ function buildWeb() {
   // public/ is generated output, never an authored source directory.
   fs.rmSync(output, { recursive: true, force: true });
   fs.mkdirSync(output, { recursive: true });
-  for (const name of ['index.html', 'app.js', 'styles.css', 'presentation.js', 'favicon.svg']) fs.copyFileSync(path.join(root, 'web', name), path.join(output, name));
+  for (const name of ['index.html', 'home.css', 'home.js', 'demo.html', 'portal.html', 'portal.css', 'portal.js', 'app.js', 'styles.css', 'presentation.js', 'favicon.svg']) fs.copyFileSync(path.join(root, 'web', name), path.join(output, name));
+  fs.cpSync(path.join(root, 'web/assets'), path.join(output, 'assets'), { recursive: true });
+  require('esbuild').buildSync({ entryPoints: [path.join(root, 'web/auth-client.js')], bundle: true, minify: true, platform: 'browser', target: ['es2022'], format: 'iife', outfile: path.join(output, 'auth-client.js') });
   const units = JSON.parse(fs.readFileSync(path.join(root, 'web/learning-content.json'), 'utf8'));
   // These signatures belong to the authored translations, not to whatever course
   // configuration happens to be supplied later. A changed source must be reviewed.

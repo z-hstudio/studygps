@@ -4,15 +4,25 @@ StudyGPS turns topic assessment results into an explainable revision plan within
 
 Built as a starting point for the n8n University Hackathon.
 
+## Homepage and private learning workspace
+
+The bilingual [homepage](https://studygps-five.vercel.app) introduces StudyGPS with an original generated navigation landscape and interactive student/teacher feature previews. These previews are explicitly illustrative. The [account workspace](https://studygps-five.vercel.app/portal.html) uses Clerk authentication and Neon Postgres, with server-enforced student ownership and classroom-scoped teacher access.
+
+Students save their own profile, topic scores, study budget, plans and task completion; they join a teacher's classroom using its invitation code. Teachers create a classroom, inspect only its enrolled students, review their scores and history, and save individualized advice. Suggestions use the deterministic study engine, with a teacher reviewing and editing the text before saving. Private learning records are never stored in browser localStorage. The homepage and account workspace both support Chinese and English, including Clerk's sign-in and sign-up components.
+
+New accounts default to student. The deployment operator can configure `STUDYGPS_ADMIN_EMAIL` for a verified-primary-email administrator or set a teacher's Clerk **private metadata**. Neither signup forms nor public/user-editable metadata grant teacher access. See [account setup, data boundaries and API contract](docs/portal-security.md). The current provisioned Clerk application is a development instance; production deployment on Vercel does not change that authentication status. A production Clerk instance/domain is required before describing the authentication setup as production-ready.
+
+Use Node.js 22: `npm ci`, configure `.env.local` from `.env.example`, then `npm run db:migrate`. `npm run dev` starts the local site at `http://127.0.0.1:3040`. `npm test` checks engine, HTTP, authentication, isolation and UI behavior; `npm run build` bundles only public assets and the public Clerk client. Secret keys and database URLs stay server-side. The pure analysis engine still works independently without Clerk, Neon or model credentials.
+
 ## Thermodynamics demo and API
 
-The Analysis / Study Plan Engine is available at **[studygps-five.vercel.app](https://studygps-five.vercel.app)**. Choose [English](https://studygps-five.vercel.app/?lang=en) or [中文](https://studygps-five.vercel.app/?lang=zh). The website includes localized explanations, errors, dates and four micro-exercises, a time-budget comparison using matched scores, a same-score/different-route demonstration and exact reassessment changes. Locale preferences persist locally; scores and plans are not stored by the application.
+The public Analysis / Study Plan Engine demo is available at **[studygps-five.vercel.app/demo.html](https://studygps-five.vercel.app/demo.html)**. Choose [English](https://studygps-five.vercel.app/demo.html?lang=en) or [中文](https://studygps-five.vercel.app/demo.html?lang=zh). It includes localized explanations, errors, dates and four micro-exercises, a time-budget comparison using matched scores, a same-score/different-route demonstration and exact reassessment changes. The public demo is stateless and does not access private account records.
 
 Call `POST /api/study-plan` with `{ input, course, previous_plan }` to use the same engine from n8n over HTTP. The API remains locale-neutral: UI translation never mutates the canonical task identity, content or comparison baseline. Learning translations are tied to fixed source signatures, so changed resources do not silently receive old activities.
 
-Use Node.js22 and run `npm ci` once for the jsdom development test dependency. Then `npm run dev` starts the local page, `npm test` runs all tests, and `npm run build` builds static assets. The engine and deployed runtime require no third-party runtime packages or model keys. Core-only checks remain available through `node --test engine/tests/*.test.js` without package installation.
+Core-only checks remain available through `node --test engine/tests/*.test.js` without package installation. Account features require the dependencies and environment configuration described above.
 
-See [the engine contract](engine/README.md), [English handoff](engine/HANDOFF.en.md), [中文交接](engine/HANDOFF.md), [bilingual demo guide](engine/DEMO-GUIDE.md), [originality research](engine/NOVELTY.md), and [deployment verification record](engine/DEPLOYMENT.md). The website calls a real API; n8n/Calendar/Gmail integration is still unverified. There are no LLM/RAG calls, persistent accounts, grade-gain predictions or claims of worldwide novelty.
+See [the engine contract](engine/README.md), [English handoff](engine/HANDOFF.en.md), [中文交接](engine/HANDOFF.md), [bilingual demo guide](engine/DEMO-GUIDE.md), [originality research](engine/NOVELTY.md), and [earlier engine deployment record](engine/DEPLOYMENT.md). The website calls real APIs; n8n/Calendar/Gmail execution is still unverified. There are no LLM/RAG calls, grade-gain predictions or claims of worldwide novelty. The [hero artwork record](docs/hero-art.md) contains the exact built-in image-generation prompt and saved asset details.
 
 ## Original starter reference
 
