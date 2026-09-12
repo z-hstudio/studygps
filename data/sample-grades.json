@@ -1,0 +1,32 @@
+[
+  {
+    "topic": "Calculus",
+    "currentScore": 55,
+    "targetScore": 80,
+    "importance": 0.3
+  },
+  {
+    "topic": "Circuits",
+    "currentScore": 70,
+    "targetScore": 80,
+    "importance": 0.4
+  },
+  {
+    "topic": "Programming",
+    "currentScore": 75,
+    "targetScore": 80,
+    "importance": 0.2
+  },
+  {
+    "topic": "Linear Algebra",
+    "currentScore": 60,
+    "targetScore": 80,
+    "importance": 0.25
+  },
+  {
+    "topic": "Engineering Mechanics",
+    "currentScore": 82,
+    "targetScore": 80,
+    "importance": 0.15
+  }
+]
