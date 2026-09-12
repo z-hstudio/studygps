@@ -12,7 +12,8 @@ Canonical site: https://studygps-five.vercel.app
 
 ## Verification
 
-- `npm test`: 138 passed, zero failed or skipped, including signed-token verification, role escalation, two-student/two-teacher isolation, streamed request-size limits and UI lifecycle behavior.
+- `npm test`: 141 passed, zero failed or skipped, including signed-token verification, role escalation, two-student/two-teacher isolation, streamed request-size limits and UI lifecycle behavior.
+- Clerk asynchronous component cleanup has three regression tests. Browser login/logout cycles for a student and a teacher passed after replacing entire retired component hosts, without deleting SDK-owned children or emitting the prior React `removeChild` error.
 - `npm run build`: passed; generated n8n artifact matches engine source.
 - `npm audit --omit=dev`: zero reported vulnerabilities.
 - Public and project artifacts scanned against current private environment values: zero matches. Only the publishable Clerk configuration reaches the browser.

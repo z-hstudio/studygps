@@ -44,7 +44,17 @@ function inputField(name, label, options = {}) { const container = el('div','fie
 function panel(title, index, icon) { const node = el('section','panel'); const head = el('div','panel-heading'); const text = el('div'); if (index) text.append(el('span','section-index',index)); text.append(el('h2',null,title)); append(head,text,icon ? el('span','icon',icon) : null); node.append(head); return node; }
 function empty(title, text, symbol = '↗') { return append(el('div','empty-state'),el('span',null,symbol),el('h3',null,title),text ? el('p',null,text) : null); }
 function loading(title) { const node = el('div','detail-loading'); node.setAttribute('role','status'); node.setAttribute('aria-live','polite'); append(node,el('div','loading-line'),el('div','loading-line'),el('div','loading-line'),el('p','loading-copy',title)); return node; }
-function clearPrivate() { loadVersion++; detailVersion++; for (const controller of requests) controller.abort(); requests.clear(); data = null; detail = null; selectedStudentId = null; $('private-content').replaceChildren(); $('private-content').hidden = true; $('private-content').removeAttribute('aria-busy'); $('auth-area').hidden = false; $('sign-out').hidden = true; $('role-label').textContent = t('privateWorkspace'); notice(''); if (accountMounted && clerk) { try { clerk.unmountUserButton($('account-button')); } catch (_) {} } accountMounted = false; $('account-button').replaceChildren(); }
+function retireClerkHost(id, unmount) {
+  const host = $(id);
+  if (!host) return;
+  // Clerk owns this host's children. Its React cleanup can run after unmount
+  // returns, so detach the whole host instead of deleting those children.
+  // A fresh host also keeps a rapid remount separate from pending old cleanup.
+  const replacement = host.cloneNode(false);
+  try { if (unmount) unmount(host); } catch (_) {}
+  host.replaceWith(replacement);
+}
+function clearPrivate() { loadVersion++; detailVersion++; for (const controller of requests) controller.abort(); requests.clear(); data = null; detail = null; selectedStudentId = null; $('private-content').replaceChildren(); $('private-content').hidden = true; $('private-content').removeAttribute('aria-busy'); $('auth-area').hidden = false; $('sign-out').hidden = true; $('role-label').textContent = t('privateWorkspace'); notice(''); const wasMounted = accountMounted; accountMounted = false; retireClerkHost('account-button',wasMounted && clerk ? host => clerk.unmountUserButton(host) : null); }
 async function request(path, options = {}) { const controller = new AbortController(); requests.add(controller); try { return await window.StudyGPSAuth.request(path, {...options,signal:controller.signal}); } finally { requests.delete(controller); } }
 function mountSignIn() {
   if (signInMounted || signUpMounted || !clerk) return;
@@ -61,8 +71,14 @@ function mountSignIn() {
   } catch (_) { $('auth-status').textContent = t('authFailed'); $('auth-retry').hidden = false; }
 }
 function unmountSignIn() {
-  if (clerk) { try { if (signInMounted) clerk.unmountSignIn($('sign-in')); if (signUpMounted) clerk.unmountSignUp($('sign-in')); } catch (_) {} }
-  signInMounted = false; signUpMounted = false; $('sign-in').replaceChildren();
+  const wasSignInMounted = signInMounted;
+  const wasSignUpMounted = signUpMounted;
+  signInMounted = false;
+  signUpMounted = false;
+  retireClerkHost('sign-in',clerk ? host => {
+    if (wasSignInMounted) clerk.unmountSignIn(host);
+    if (wasSignUpMounted) clerk.unmountSignUp(host);
+  } : null);
 }
 async function onIdentity(user) { const nextId = user?.id || null; if (nextId === userId && ['signedin','signedout'].includes(authState)) return; clearPrivate(); userId = nextId; if (!nextId) { authState = 'signedout'; $('auth-status').textContent = ''; mountSignIn(); return; } authState = 'signedin'; unmountSignIn(); $('auth-area').hidden = true; $('private-content').hidden = false; $('sign-out').hidden = false; if (!accountMounted) { try { clerk.mountUserButton($('account-button'), {afterSignOutUrl:'/portal.html?lang=' + locale,appearance:{elements:{avatarBox:'portal-account-avatar'}}}); accountMounted = true; } catch (_) {} } await refresh(); }
 async function bootstrap() { const version = ++authVersion; authState = 'loading'; $('auth-status').textContent = t('authLoading'); $('auth-retry').hidden = true; try { if (!window.StudyGPSAuth) throw Object.assign(new Error('Missing auth client'), {code:'AUTH_NOT_CONFIGURED'}); const ready = await window.StudyGPSAuth.ready(locale); if (version !== authVersion) return; clerk = ready.clerk; development = Boolean(ready.config?.development); applyLocale(); if (!clerk) throw Object.assign(new Error('Missing auth configuration'), {code:'AUTH_NOT_CONFIGURED'}); if (authUnsubscribe) authUnsubscribe(); authUnsubscribe = clerk.addListener(({user}) => { void onIdentity(user); }); await onIdentity(clerk.user); } catch (error) { if (version !== authVersion) return; authState = 'error'; $('auth-status').textContent = /CONFIG|UNAVAILABLE/.test(error?.code || '') ? t('authUnconfigured') : t('authFailed'); $('auth-retry').hidden = false; } }
