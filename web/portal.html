@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b171b"><meta name="robots" content="noindex,nofollow">
+<meta name="description" content="StudyGPS private learning workspace · 学生与教师的个性化学习空间">
+<title>StudyGPS · 学习空间</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/portal.css">
+<script src="/auth-client.js" defer></script><script src="/portal.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#workspace" data-i18n="skip">跳到学习空间</a>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+<a class="brand" href="/" aria-label="StudyGPS home"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 38 20 20 38 2 20Z" fill="currentColor"/><path d="m28 12-5 13-11 3 5-13Z" fill="#0b171b"/><circle cx="20" cy="20" r="2" fill="currentColor"/></svg><span>StudyGPS<span class="brand-dot">.</span></span></a>
+<div class="side-eyebrow" data-i18n="yourSpace">你的学习空间</div>
+<nav class="side-nav" aria-label="工作空间导航" data-i18n-aria="navigation"><a class="nav-item active" href="/portal.html" id="workspace-link"><span aria-hidden="true">◈</span><span data-i18n="workspace">学习驾驶舱</span><span class="nav-dot" aria-hidden="true"></span></a><a class="nav-item" href="/demo.html" id="demo-link"><span aria-hidden="true">↗</span><span data-i18n="demo">探索公开演示</span></a><a class="nav-item" href="/" id="home-link"><span aria-hidden="true">⌂</span><span data-i18n="home">返回主页</span></a></nav>
+<div class="side-note"><span class="small-compass" aria-hidden="true">✳</span><p data-i18n="sideNote">每个人的起点不同。<br>下一步，也应该不同。</p><span class="side-note-caption" data-i18n="privateSpace">个人数据 · 按角色访问</span></div>
+<div class="side-bottom"><span class="secure-dot" aria-hidden="true"></span><span data-i18n="accessNote">身份验证与班级访问控制</span></div>
+</aside>
+<div class="main-shell">
+<header class="topbar"><div class="breadcrumbs"><button id="menu-toggle" class="menu-button" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="打开导航" data-i18n-aria="openMenu">☰</button><span data-i18n="workspace">学习驾驶舱</span><span class="crumb-divider" aria-hidden="true">/</span><span id="role-label" data-i18n="privateWorkspace">个人空间</span></div><div class="topbar-actions"><div class="locale-switch" role="group" aria-label="Language / 语言"><button type="button" data-locale="zh" lang="zh-CN" aria-pressed="true">中文</button><button type="button" data-locale="en" lang="en" aria-pressed="false">EN</button></div><div id="account-button"></div><button id="sign-out" class="sign-out" type="button" hidden data-i18n="signOut">退出</button></div></header>
+<main id="workspace" tabindex="-1"><p id="auth-environment" class="env-notice" hidden></p><div id="notice" class="notice" role="status" aria-live="polite" hidden></div><section id="auth-area" class="auth-area" aria-labelledby="auth-title"><div class="auth-story"><p class="eyebrow"><span class="live-dot" aria-hidden="true"></span><span data-i18n="authEyebrow">一点方向，无限可能</span></p><h1 id="auth-title" data-i18n="authTitle">你的下一步，<br>从这里开始。</h1><p class="auth-copy" data-i18n="authCopy">将成绩变成行动，让老师的建议真正抵达每一位学生。</p><div class="navigation-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="orbit-center">✳</span><span class="orbit-point point-one"></span><span class="orbit-point point-two"></span><span class="art-coordinate coordinate-one">01 / ORIGIN</span><span class="art-coordinate coordinate-two">02 / DIRECTION</span><div class="art-cross cross-one">+</div><div class="art-cross cross-two">+</div></div><p class="auth-footnote" data-i18n="authFootnote">学生专注自己的进度。老师支持自己班级的学生。</p></div><div class="auth-panel"><span class="section-index">01 / ACCESS</span><h2 data-i18n="signInTitle">进入学习空间</h2><p data-i18n="signInCopy">登录后读取你的学习记录与所属班级。</p><div id="auth-status" class="auth-status" role="status" aria-live="polite"></div><div id="sign-in"></div><button type="button" id="auth-retry" class="button button-dark" hidden data-i18n="retry">重试连接</button><a href="/demo.html" id="auth-demo-link" class="text-link" data-i18n="tryDemo">先体验公开演示 ↗</a><p class="auth-disclosure" data-i18n="roleDisclosure">学生是默认角色。教师权限由部署管理员在服务端分配，注册时无法自行提升权限。</p></div></section><div id="private-content" hidden></div></main>
+<footer class="workspace-footer"><span>StudyGPS<span class="brand-dot">.</span></span><p data-i18n="footer">少一点猜测。多一点方向。</p><span class="footer-mark" aria-hidden="true">↗</span></footer>
+</div></div>
+<noscript><p class="noscript">请启用 JavaScript 登录学习空间。Enable JavaScript to access your workspace.</p></noscript>
+</body>
+</html>

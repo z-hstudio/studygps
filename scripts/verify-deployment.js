@@ -17,9 +17,18 @@ async function verifyDeployment(baseUrl) {
   }
   const page = await check('/');
   assert.match(await page.text(), /StudyGPS/);
-  for (const route of ['/app.js', '/styles.css', '/presentation.js', '/learning-content.js', '/favicon.svg', '/downloads/n8n-code-node.js', '/downloads/HANDOFF.md', '/downloads/HANDOFF.en.md', '/downloads/DEMO-GUIDE.md', '/downloads/NOVELTY.md']) await check(route);
+  for (const route of ['/home.js', '/home.css', '/assets/studygps-navigation-hero.png', '/portal.html', '/portal.js', '/portal.css', '/auth-client.js', '/demo.html', '/app.js', '/styles.css', '/presentation.js', '/learning-content.js', '/favicon.svg', '/downloads/n8n-code-node.js', '/downloads/HANDOFF.md', '/downloads/HANDOFF.en.md', '/downloads/DEMO-GUIDE.md', '/downloads/NOVELTY.md']) await check(route);
   const english = await check('/?lang=en');
   assert.match(await english.text(), /data-locale="en"/);
+  const config = await (await check('/api/auth-config')).json();
+  assert.deepEqual(Object.keys(config).sort(), ['configured', 'development', 'publishableKey']);
+  assert.equal(config.configured, true);
+  const anonymous = await check('/api/portal', {}, 401);
+  assert.match(anonymous.headers.get('cache-control'), /no-store/);
+  assert.equal((await anonymous.json()).error.code, 'AUTH_REQUIRED');
+  const forged = await check('/api/portal', {headers:{Authorization:'Bearer forged.token.value'}}, 401);
+  assert.equal((await forged.json()).error.code, 'AUTH_INVALID');
+  await check('/api/portal', {method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:'{"action":"save-profile","role":"teacher"}'},403);
   const health = await check('/api/health');
   assert.equal((await health.json()).service, 'studygps');
   const post = (payload) => ({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });

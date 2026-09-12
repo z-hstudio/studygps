@@ -1,67 +1,143 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#152625">
-<meta name="description" content="StudyGPS：把知识点成绩变成有依据的下一步。试算时间预算，查看复习路线，测评后重新规划。">
-<title>StudyGPS · 每一小时，都有方向</title>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
-<script src="/presentation.js" defer></script><script src="/learning-content.js" defer></script><script src="/app.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#091820">
+  <meta name="description" content="StudyGPS 把知识点成绩变成清晰的个性化学习路线。学生掌握自己的下一步，老师为自己的班级提供针对性建议。">
+  <title>StudyGPS · 学习，自有方向</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/studygps-navigation-hero.png" as="image">
+  <link rel="stylesheet" href="/home.css">
+  <script src="/home.js" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#study-form" data-i18n="skip">跳到测评输入</a>
-<header class="site-header">
-<a class="brand" href="/" aria-label="StudyGPS"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 38 20 20 38 2 20Z" fill="currentColor"/><path d="m28 12-5 13-11 3 5-13Z" fill="#172b2a"/><circle cx="20" cy="20" r="2" fill="currentColor"/></svg><span>StudyGPS<span class="brand-period">.</span></span></a>
-<nav class="main-nav" data-i18n-aria="navigation" aria-label="导航"><a href="#workspace" data-i18n="navPlan">学习驾驶舱</a><a href="#insights" data-i18n="navStory">为什么不同</a><a href="#handoff" data-i18n="navFlow">自动化接力</a></nav>
-<div class="locale-switch" role="group" aria-label="界面语言" data-i18n-aria="language"><button type="button" data-locale="zh" lang="zh-CN" aria-pressed="true">中文</button><button type="button" data-locale="en" lang="en" aria-pressed="false">EN</button></div>
-</header>
-<main>
-<section class="intro content-width">
-<div><p class="eyebrow"><span class="live-dot"></span><span data-i18n="eyebrow">学习导航 · 热力学演示</span></p><h1 data-i18n="headline">每一小时，都有方向。</h1><p class="intro-copy" data-i18n="intro">你不缺资料。你需要知道：现在，先学哪一块。</p></div>
-<div class="intro-note"><span class="orbit" aria-hidden="true">↗</span><p data-i18n="introNote">从知识点成绩出发，把有限时间变成下一步。</p></div>
-</section>
-<section id="workspace" class="workspace content-width" aria-labelledby="input-title">
-<aside class="input-panel">
-<div class="section-head"><h2 id="input-title" data-i18n="inputTitle">设定你的起点</h2><span class="step-label" data-i18n="inputStep">01 / 输入</span></div>
-<form id="study-form" novalidate>
-<label class="field-label" for="preset" data-i18n="presetLabel">选择一个学习者</label>
-<select id="preset"><option value="alex-assessment-1" data-i18n="alex1">Alex · 第一次测评</option><option value="sarah-assessment-1" data-i18n="sarah1">Sarah · 第一次测评</option><option value="alex-assessment-2" data-i18n="alex2">Alex · 第二次测评</option></select>
-<p id="student-meta" class="helper"></p><p id="previous-note" class="previous-note" hidden></p>
-<fieldset id="assessment-fields" disabled><legend class="sr-only" data-i18n="fieldsLegend">成绩与时间预算</legend>
-<div class="score-section"><div class="section-head"><h3 data-i18n="scores">知识点成绩</h3><span class="helper">0–100</span></div>
-<div class="score-row"><label for="score-first-law" data-i18n="first_law">第一定律</label><span class="weight">30%</span><input id="score-first-law" data-topic="first_law" type="number" min="0" max="100" step="any" inputmode="decimal" placeholder="未测" data-i18n-placeholder="missingShort" aria-describedby="score-note"></div>
-<div class="score-row"><label for="score-second-law" data-i18n="second_law">第二定律</label><span class="weight">30%</span><input id="score-second-law" data-topic="second_law" type="number" min="0" max="100" step="any" inputmode="decimal" placeholder="未测" data-i18n-placeholder="missingShort" aria-describedby="score-note"></div>
-<div class="score-row"><label for="score-entropy" data-i18n="entropy">熵</label><span class="weight">10%</span><input id="score-entropy" data-topic="entropy" type="number" min="0" max="100" step="any" inputmode="decimal" placeholder="未测" data-i18n-placeholder="missingShort" aria-describedby="score-note"></div>
-<div class="score-row"><label for="score-rankine-cycle" data-i18n="rankine_cycle">朗肯循环</label><span class="weight">30%</span><input id="score-rankine-cycle" data-topic="rankine_cycle" type="number" min="0" max="100" step="any" inputmode="decimal" placeholder="未测" data-i18n-placeholder="missingShort" aria-describedby="score-note"></div>
-<p id="score-note" class="helper" data-i18n="scoreNote">百分比为演示权重。留空是未测评，不是 0 分。</p></div>
-<div class="controls-grid"><div><label for="target-score" class="field-label" data-i18n="target">参考目标</label><div class="unit-input"><input id="target-score" type="number" min="0" max="100" step="any" required value="80" inputmode="decimal"><span>%</span></div></div><div><label for="available-minutes" class="field-label" data-i18n="budget">本轮总预算</label><div class="unit-input"><input id="available-minutes" type="number" min="0" max="9007199254740991" step="any" required value="180" inputmode="decimal" aria-describedby="budget-note"><span data-i18n="min">分钟</span></div></div></div>
-<p id="budget-note" class="helper" data-i18n="budgetNote">按 30 分钟分块；预算是本轮总时间。</p>
-<button id="generate-button" class="primary-button" type="submit"><span data-i18n="generate">规划我的下一步</span><span aria-hidden="true">↗</span></button>
-<button id="reset-button" class="quiet-button" type="button" data-i18n="reset">重置当前案例</button>
-</fieldset></form>
-<details class="assumptions"><summary data-i18n="assumptions">这份计划基于什么？</summary><p data-i18n="assumptionsText">权重和建议时长是人工设定的演示参数。第一定律、第二定律、朗肯循环各 60 分钟，熵 90 分钟。排序可解释，但不预测提分，也不保证考试结果。</p></details>
-</aside>
-<div class="result-column">
-<div class="result-toolbar"><div><span class="step-label" data-i18n="routeLabel">02 / 路线</span><h2 data-i18n="routeTitle">你的复习路线</h2></div><span id="plan-status-label" class="pill"></span></div>
-<p id="result-status" class="result-status" role="status" aria-live="polite"></p>
-<div id="error-box" class="error-box" role="alert" tabindex="-1" hidden><h3 data-i18n="errorTitle">暂时无法生成计划</h3><p id="error-message"></p><ul id="error-issues"></ul><button id="retry-button" class="outline-button" type="button" data-i18n="retry">重试</button></div>
-<div id="empty-state" class="loading-card"><span class="compass-loader" aria-hidden="true">↗</span><h3 data-i18n="loadingTitle">正在寻找你的下一步</h3><p data-i18n="loadingNote">用真实计算，把成绩和时间连起来。</p></div>
-<div id="result-panel" aria-busy="false" hidden>
-<section class="route-overview" aria-labelledby="next-topic"><div class="next-step"><p class="eyebrow" data-i18n="startWith">从这里开始</p><h3 id="next-topic"></h3><p id="next-reason"></p><button id="start-learning" type="button" class="lime-button" data-i18n="startLearning">先学一点 →</button></div><div class="route-metrics"><div><span data-i18n="weightedScore">加权测评结果</span><p><strong id="overall-score">—</strong><small>/ 100</small></p><span class="metric-caption" data-i18n="notPrediction">演示权重 · 非预测分数</span></div><div><span data-i18n="plannedTime">已安排时间</span><p><strong id="planned-minutes">—</strong><small data-i18n="min">分钟</small></p><span id="unused-minutes" class="metric-caption"></span></div></div></section>
-<section class="time-lens" aria-labelledby="lens-title"><div class="section-head"><div><h3 id="lens-title" data-i18n="lensTitle">如果我只有……</h3><p class="helper" data-i18n="lensNote">只改变时间，看看哪些任务还能放得下。</p></div><span class="mini-icon" aria-hidden="true">◷</span></div><div class="budget-options" role="group" data-i18n-aria="budgetChoices" aria-label="预算推演"><button type="button" data-budget="30">30</button><button type="button" data-budget="60">60</button><button type="button" data-budget="120">120</button><button type="button" data-budget="180">180</button><button type="button" data-budget="240">240</button><span data-i18n="min">分钟</span></div><p id="lens-summary" class="lens-summary"></p><div id="lens-diff" class="lens-diff"></div></section>
-<div class="section-head task-heading"><h3 data-i18n="taskTitle">把重点，变成行动</h3><span id="task-count" class="helper"></span></div><div id="tasks" class="tasks"></div>
-<details class="analysis-panel"><summary><span data-i18n="whyOrder">为什么这样排？查看计算依据</span><span aria-hidden="true">＋</span></summary><p class="formula" data-i18n="formula">优先分 = 目标差距 × 配置权重 ÷ 建议小时数</p><div class="table-scroll"><table><caption class="sr-only" data-i18n="analysisCaption">所有知识点的优先级计算</caption><thead><tr><th data-i18n="topic">知识点</th><th data-i18n="observed">成绩</th><th data-i18n="gap">差距</th><th data-i18n="weight">权重</th><th data-i18n="estimate">建议时长</th><th data-i18n="priority">优先分</th></tr></thead><tbody id="analysis-rows"></tbody></table></div><p class="helper" data-i18n="formulaNote">分数相同按课程配置顺序排序；只安排有成绩且低于目标的知识点。没有额外前置知识推断。</p></details>
-<section id="changes-section" class="changes-card" hidden><div class="section-head"><h3 data-i18n="changesTitle">新测评，路线会改变</h3><span id="change-kind" class="pill"></span></div><div id="route-transition" class="route-transition"></div><ul id="changes-list"></ul><p class="helper" data-i18n="changeNote">任务标识保持稳定，供队友更新原任务。这里只比较计划，尚未修改日历。</p></section>
-<section id="warnings-section" class="warnings-card" hidden><h3 data-i18n="warnings">还需要留意</h3><ul id="warnings-list"></ul></section>
-<details class="explanation-panel"><summary data-i18n="summaryTitle">阅读完整计划说明</summary><p id="plan-summary"></p><p class="helper" data-i18n="templateNote">说明随当前计算结果生成；当前版本使用模板，没有调用大模型。</p></details>
-<div class="result-actions"><details class="json-panel"><summary data-i18n="viewJson">查看计划 JSON</summary><pre id="json-output" tabindex="0" aria-label="完整学习计划 JSON" data-i18n-aria="planJson"></pre></details><button id="download-json" class="text-button" type="button" disabled data-i18n="downloadJson">下载计划 JSON ↓</button></div>
-</div></div></section>
-<section id="insights" class="insights content-width" aria-labelledby="insights-title"><div class="section-title"><p class="eyebrow" data-i18n="insightsEyebrow">看见总分背后的差别</p><h2 id="insights-title" data-i18n="insightsTitle">同样的分数，不同的下一步。</h2><p data-i18n="insightsCopy">总分会掩盖差距。试试两位学习者，再看一次新测评如何重新规划路线。</p></div><div id="proof-cards" class="proof-cards"></div><p class="helper" data-i18n="proofNote">演示数据由同一引擎生成；案例中的成绩变化不是产品提分效果。</p></section>
-<section id="handoff" class="handoff content-width" aria-labelledby="handoff-title"><div class="section-title"><p class="eyebrow" data-i18n="flowEyebrow">从一次测评，到下一次行动</p><h2 id="handoff-title" data-i18n="flowTitle">一个能接力的学习循环。</h2><p data-i18n="flowCopy">分析负责决定“学什么”，n8n 负责把计划送到日历和通知。每次测评，只传递真正发生的变化。</p></div><ol class="flow"><li><span class="flow-number">01</span><h3 data-i18n="flowAssessment">测评输入</h3><p data-i18n="flowAssessmentNote">知识点成绩与预算</p><span class="flow-status" data-i18n="runnable">已可运行</span></li><li><span class="flow-number">02</span><h3 data-i18n="flowEngine">分析与计划</h3><p data-i18n="flowEngineNote">校验 → 排序 → 分块</p><span class="flow-status" data-i18n="runnable">已可运行</span></li><li><span class="flow-number">03</span><h3 data-i18n="flowDiff">变化识别</h3><p data-i18n="flowDiffNote">稳定任务标识与差异</p><span class="flow-status" data-i18n="runnable">已可运行</span></li><li class="pending"><span class="flow-number">04</span><h3 data-i18n="flowN8n">n8n · 日历 · 邮件</h3><p data-i18n="flowN8nNote">适配代码已备好，待队友接通</p><span class="flow-status" data-i18n="pending">真实流程未验证</span></li></ol>
-<div class="handoff-bottom"><p data-i18n="handoffCopy">用同一份引擎连接网页和 n8n。切换语言只改变展示，任务标识和对接数据保持一致。</p><div class="download-links"><a href="/downloads/n8n-code-node.js" download data-i18n="downloadAdapter">n8n 适配代码 ↗</a><a href="/downloads/HANDOFF.md" download data-i18n="downloadHandoff">中文对接说明 ↗</a><a href="/downloads/DEMO-GUIDE.md" download data-i18n="downloadGuide">双语演示指南 ↗</a></div></div>
-</section>
-</main>
-<footer class="site-footer content-width"><a class="brand footer-brand" href="/">StudyGPS.</a><p data-i18n="footer">少一点猜测。多一点方向。</p><span data-i18n="demoLabel">原创练习 · 演示参数 · 无账号存储</span></footer>
-<dialog id="learning-dialog" aria-labelledby="learning-title"><div class="dialog-header"><span class="step-label" data-i18n="learningLabel">学习一小步</span><button type="button" id="close-learning" class="icon-button" data-i18n-aria="close" aria-label="关闭">×</button></div><div id="learning-body"></div></dialog>
-<noscript><p>请启用 JavaScript 使用交互演示。Enable JavaScript to use the interactive demo.</p></noscript>
-</body></html>
+  <a class="skip-link" href="#main" data-i18n="skip">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="/" data-home-link aria-label="StudyGPS">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 38 20 20 38 2 20Z" fill="currentColor"/><path d="m28 12-5 13-11 3 5-13Z" fill="#091820"/><circle cx="20" cy="20" r="2" fill="currentColor"/></svg>
+      <span>StudyGPS<span class="brand-dot">.</span></span>
+    </a>
+    <nav class="main-nav" aria-label="主导航" data-i18n-aria="navigation">
+      <a href="#approach" data-i18n="navApproach">学习方式</a>
+      <a href="#together" data-i18n="navTogether">师生协作</a>
+      <a href="/demo.html?lang=zh" data-locale-link data-i18n="navDemo">体验演示 <span aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="header-actions">
+      <div class="locale-switch" role="group" aria-label="语言" data-i18n-aria="language">
+        <button type="button" data-locale="zh" lang="zh-CN" aria-pressed="true">中文</button><span aria-hidden="true">/</span><button type="button" data-locale="en" lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="header-login" href="/portal.html?lang=zh" data-locale-link><span data-i18n="login">登录</span><span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-art" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="hero-inner page-width">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span><span data-i18n="heroEyebrow">你的学习导航系统</span></p>
+          <h1 id="hero-title"><span data-i18n="headlineFirst">学习，</span><em data-i18n="headlineSecond">自有方向。</em></h1>
+          <p class="hero-description" data-i18n="heroDescription">把「还有很多没学」变成「下一步很清楚」。从你的薄弱点出发，让每一小时都走在自己的路上。</p>
+          <div class="hero-actions">
+            <a class="button button-lime" href="/portal.html?lang=zh" data-locale-link><span data-i18n="startRoute">开启我的学习路线</span><span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="/demo.html?lang=zh" data-locale-link><span data-i18n="tryDemo">先试试看</span><span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="hero-note"><span class="tiny-compass" aria-hidden="true">✳</span><span data-i18n="heroNote">从一次测评出发。每一步，都有依据。</span></p>
+        </div>
+        <div class="route-annotation">
+          <span class="annotation-orbit" aria-hidden="true">↗</span>
+          <div><span class="annotation-label" data-i18n="annotationLabel">下一站 · 演示路线</span><strong data-i18n="annotationTopic">把朗肯循环，学明白。</strong><span class="annotation-time" data-i18n="annotationTime">60 分钟 · 从薄弱点出发</span></div>
+          <span class="annotation-dot" aria-hidden="true"></span>
+        </div>
+        <div class="hero-bottom">
+          <span class="hero-coordinate">01 / STUDY WITH INTENTION</span>
+          <a href="#approach" class="discover-link"><span data-i18n="discover">找到你的下一步</span><span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+    <section id="approach" class="approach section-space" aria-labelledby="approach-title">
+      <div class="page-width">
+        <div class="section-heading reveal">
+          <div><p class="eyebrow muted" data-i18n="approachEyebrow">不止看见分数 · 更要看见你</p><h2 id="approach-title"><span data-i18n="approachFirst">同样的分数，</span><br><span class="serif-accent" data-i18n="approachSecond">不同的下一步。</span></h2></div>
+          <p class="section-intro" data-i18n="approachDescription">学习无需把所有事情再做一遍。找到真正需要投入的地方，让有限时间有更清晰的安排。</p>
+        </div>
+        <div class="approach-cards">
+          <article class="approach-card reveal">
+            <div class="card-top"><span class="card-number">01</span><span class="card-tag" data-i18n="diagnoseTag">看清起点</span></div>
+            <h3 data-i18n="diagnoseTitle">总分相同，差距不同。</h3>
+            <p class="card-description" data-i18n="diagnoseDescription">深入每个知识点，发现总分没有告诉你的事。</p>
+            <div class="diagnosis-visual" role="img" aria-label="演示：Alex 与 Sarah 加权总分同为 63.5。第一定律分别为 85、50；朗肯循环分别为 50、85。" data-i18n-aria="diagnosisAlt">
+              <div class="same-score"><span data-i18n="sameScore">相同加权总分</span><strong>63.5<small>/ 100</small></strong></div>
+              <div class="chart-legend"><span><i class="alex-key"></i>Alex</span><span><i class="sarah-key"></i>Sarah</span></div>
+              <div class="bar-group"><span data-i18n="firstLaw">第一定律</span><div class="bar-row"><div class="bar-track"><i class="bar-fill alex first-alex"></i></div><b>85</b></div><div class="bar-row"><div class="bar-track"><i class="bar-fill sarah first-sarah"></i></div><b>50</b></div></div>
+              <div class="bar-group"><span data-i18n="rankine">朗肯循环</span><div class="bar-row"><div class="bar-track"><i class="bar-fill alex rankine-alex"></i></div><b>50</b></div><div class="bar-row"><div class="bar-track"><i class="bar-fill sarah rankine-sarah"></i></div><b>85</b></div></div>
+            </div>
+            <p class="card-footnote" data-i18n="diagnoseFootnote">热力学演示数据 · 使用配置权重计算</p>
+          </article>
+          <article class="approach-card time-card reveal">
+            <div class="card-top"><span class="card-number">02</span><span class="card-tag" data-i18n="timeTag">掌握节奏</span></div>
+            <h3 data-i18n="timeTitle">把时间，花在重点上。</h3>
+            <p class="card-description" data-i18n="timeDescription">选择你的时间预算，把复习拆成可开始的小段。</p>
+            <div class="time-visual" aria-hidden="true"><div class="time-orbit orbit-one"></div><div class="time-orbit orbit-two"></div><div class="time-orbit orbit-three"></div><span class="time-satellite satellite-one"></span><span class="time-satellite satellite-two"></span><div class="time-center"><strong>30<span>′</span></strong><span data-i18n="timeUnit">分钟 / 学习分块</span></div><span class="time-coordinate">FOCUS / 01</span></div>
+            <p class="card-footnote" data-i18n="timeFootnote">每块 30 分钟 · 按预算安排任务</p>
+          </article>
+          <article class="approach-card reroute-card reveal">
+            <div class="card-top"><span class="card-number">03</span><span class="card-tag" data-i18n="rerouteTag">随你调整</span></div>
+            <h3 data-i18n="rerouteTitle">你在前进，路线也是。</h3>
+            <p class="card-description" data-i18n="rerouteDescription">新测评到来，重新识别重点，让下一步跟上你。</p>
+            <div class="reroute-visual">
+              <div class="progress-topic"><span data-i18n="rankine">朗肯循环</span><span class="demo-pill" data-i18n="alexDemo">Alex · 演示</span></div>
+              <div class="progress-values"><span>50</span><svg viewBox="0 0 90 28" aria-hidden="true"><path d="M2 14h82m-12-10 12 10-12 10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><strong>78</strong></div>
+              <div class="reroute-path" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div class="next-topic"><span class="next-icon" aria-hidden="true">↗</span><div><span data-i18n="newPriority">新的优先学习点</span><strong data-i18n="secondLaw">第二定律</strong></div></div>
+            </div>
+            <p class="card-footnote" data-i18n="rerouteFootnote">两次模拟测评 · 非产品提分效果</p>
+          </article>
+        </div>
+        <div class="approach-link reveal"><span data-i18n="approachNote">每条路线，都能查看排序与时间分配的依据。</span><a class="dark-link" href="/demo.html?lang=zh" data-locale-link><span data-i18n="exploreEngine">动手试一试</span><span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+    <section id="together" class="together section-space" aria-labelledby="together-title">
+      <div class="page-width together-grid">
+        <div class="together-copy reveal">
+          <p class="eyebrow muted" data-i18n="togetherEyebrow">各自的空间 · 共同的成长</p>
+          <h2 id="together-title"><span data-i18n="togetherFirst">每个学生，</span><br><span class="serif-accent" data-i18n="togetherSecond">都值得被看见。</span></h2>
+          <p class="section-intro" data-i18n="togetherDescription">学生拥有自己的学习空间。老师看清自己班级中每个人的不同，把理解变成具体的个性化建议。</p>
+          <div class="role-tabs" role="tablist" aria-label="查看不同角色" data-i18n-aria="roleTabs">
+            <button type="button" role="tab" id="student-tab" aria-selected="true" aria-controls="student-panel" tabindex="0" data-role-tab="student"><span aria-hidden="true">↗</span><span data-i18n="studentTab">我是学生</span></button>
+            <button type="button" role="tab" id="teacher-tab" aria-selected="false" aria-controls="teacher-panel" tabindex="-1" data-role-tab="teacher"><span aria-hidden="true">⊞</span><span data-i18n="teacherTab">我是老师</span></button>
+          </div>
+          <div class="role-benefits" id="student-benefits"><p><span aria-hidden="true">01</span><span data-i18n="studentBenefit1">自己的计划，在自己的账户里</span></p><p><span aria-hidden="true">02</span><span data-i18n="studentBenefit2">回看知识点成绩与学习进度</span></p><p><span aria-hidden="true">03</span><span data-i18n="studentBenefit3">收到老师专门为你写的建议</span></p></div>
+          <div class="role-benefits" id="teacher-benefits" hidden><p><span aria-hidden="true">01</span><span data-i18n="teacherBenefit1">在管理空间查看自己班级的学生</span></p><p><span aria-hidden="true">02</span><span data-i18n="teacherBenefit2">逐人查看成绩、计划与学习进度</span></p><p><span aria-hidden="true">03</span><span data-i18n="teacherBenefit3">保存针对不同学生的个性化建议</span></p></div>
+          <a class="dark-link together-link" href="/portal.html?lang=zh" data-locale-link><span data-i18n="openSpace">进入我的空间</span><span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="product-scene reveal">
+          <div class="scene-ring ring-one" aria-hidden="true"></div><div class="scene-ring ring-two" aria-hidden="true"></div>
+          <div class="product-window">
+            <div class="window-chrome"><span class="mini-brand"><span aria-hidden="true">✳</span> StudyGPS</span><span class="illustration-label" data-i18n="illustration">功能示意</span></div>
+            <div id="student-panel" class="mock-panel" role="tabpanel" aria-labelledby="student-tab" tabindex="0">
+              <div class="mock-profile"><div class="avatar alex-avatar">A</div><div><span class="mock-overline" data-i18n="personalSpace">个人学习空间</span><h3 data-i18n="helloAlex">Alex，找到你的节奏。</h3></div><span class="lock-icon" aria-hidden="true">⌑</span></div>
+              <div class="mock-route"><div class="mock-route-heading"><span class="mock-overline" data-i18n="yourNextStep">你的下一步</span><span class="route-time">60 <span data-i18n="minutes">分钟</span></span></div><h4 data-i18n="rankine">朗肯循环</h4><p data-i18n="mockRouteDescription">先看懂循环中的四个过程，再做一次概念自检。</p><div class="mini-route" aria-hidden="true"><span class="complete">✓</span><i></i><span class="current">2</span><i></i><span>3</span><i></i><span>4</span></div><div class="mini-route-labels"><span data-i18n="understand">理解</span><span data-i18n="practice">练习</span><span data-i18n="review">复习</span><span data-i18n="assess">测评</span></div></div>
+              <div class="advice-card"><span class="advice-icon" aria-hidden="true">“</span><div><span class="mock-overline" data-i18n="teacherAdvice">来自老师的建议 · 示例</span><p data-i18n="mockAdvice">先画出 T-s 图，再解释每一段能量如何流动。你对第一定律的理解可以帮上忙。</p></div></div>
+            </div>
+            <div id="teacher-panel" class="mock-panel" role="tabpanel" aria-labelledby="teacher-tab" tabindex="0" hidden>
+              <div class="mock-profile"><div class="avatar teacher-avatar" aria-hidden="true">↗</div><div><span class="mock-overline" data-i18n="teachingSpace">班级管理空间</span><h3 data-i18n="classTitle">看清每一种不同。</h3></div></div>
+              <div class="class-summary"><span data-i18n="exampleClass">热力学 · 示例班级</span><span data-i18n="twoStudents">2 位学生</span></div>
+              <div class="student-table"><div class="student-row"><div class="avatar small-avatar">A</div><div><strong>Alex</strong><span data-i18n="alexFocus">重点：朗肯循环</span></div><strong class="student-score">63.5</strong><span class="row-arrow" aria-hidden="true">↗</span></div><div class="student-row"><div class="avatar small-avatar sarah-avatar">S</div><div><strong>Sarah</strong><span data-i18n="sarahFocus">重点：第一定律</span></div><strong class="student-score">63.5</strong><span class="row-arrow" aria-hidden="true">↗</span></div></div>
+              <div class="teacher-note"><span class="mock-overline" data-i18n="adviceForSarah">给 Sarah 的个性化建议 · 示例</span><p data-i18n="sarahAdvice">从封闭系统的能量平衡开始，用一个活塞案例区分功与热量。</p><div class="note-status"><span class="status-dot" aria-hidden="true"></span><span data-i18n="noteExample">建议记录示意</span></div></div>
+            </div>
+          </div>
+          <p class="scene-caption"><span aria-hidden="true">✳</span><span data-i18n="sceneCaption">角色与界面示意。实际数据在登录后的专属空间查看。</span></p>
+        </div>
+      </div>
+    </section>
+    <section class="closing" aria-labelledby="closing-title">
+      <div class="closing-orbit orbit-a" aria-hidden="true"></div><div class="closing-orbit orbit-b" aria-hidden="true"></div><span class="closing-star" aria-hidden="true">✳</span>
+      <div class="closing-inner reveal"><p class="eyebrow" data-i18n="closingEyebrow">少一点迷茫 · 多一个清晰的开始</p><h2 id="closing-title"><span data-i18n="closingFirst">下一步，</span><em data-i18n="closingSecond">为你而定。</em></h2><p data-i18n="closingDescription">带上你的目标。我们一起找到起点。</p><a class="button button-lime" href="/portal.html?lang=zh" data-locale-link><span data-i18n="startRoute">开启我的学习路线</span><span aria-hidden="true">↗</span></a></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="/" data-home-link aria-label="StudyGPS"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 38 20 20 38 2 20Z" fill="currentColor"/><path d="m28 12-5 13-11 3 5-13Z" fill="#091820"/><circle cx="20" cy="20" r="2" fill="currentColor"/></svg><span>StudyGPS<span class="brand-dot">.</span></span></a><p data-i18n="footerNote">让每一小时，都有方向。</p><a href="https://github.com/z-hstudio/studygps" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">查看源代码</span><span aria-hidden="true">↗</span></a></div></footer>
+</body>
+</html>
