@@ -14,7 +14,7 @@ function buildWeb() {
   const pages = [
     'index.html', 'home.css', 'home.js',
     'demo.html', 'app.js', 'styles.css', 'presentation.js',
-    'portal.html', 'portal.css', 'portal.js',
+    'portal.html', 'portal.css', 'portal.js', 'canvas.js',
     'navigation-ui.js', 'navigation.css', 'navigation-demo.js', 'navigation-demo.css',
     'study-audio.js', 'study-audio.css',
     'pricing.html', 'pricing.css', 'pricing.js', 'favicon.svg',

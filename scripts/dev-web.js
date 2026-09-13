@@ -7,6 +7,7 @@ try { require('node:process').loadEnvFile(path.resolve(__dirname, '../.env.local
 const studyPlan = require('../api/study-plan');
 const health = require('../api/health');
 const portal = require('../api/portal');
+const canvas = require('../api/canvas');
 const authConfig = require('../api/auth-config');
 const navigationDemo = require('../api/navigation-demo');
 const { buildWeb } = require('./build-web');
@@ -18,6 +19,7 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
   if (url.pathname === '/api/study-plan') return studyPlan(req, res);
   if (url.pathname === '/api/health') return health(req, res);
+  if (url.pathname === '/api/canvas') return canvas(req, res);
   if (url.pathname === '/api/portal') return portal(req, res);
   if (url.pathname === '/api/auth-config') return authConfig(req, res);
   if (url.pathname === '/api/navigation-demo') return navigationDemo(req, res);

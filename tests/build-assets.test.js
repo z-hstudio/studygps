@@ -72,7 +72,7 @@ test('build publishes all four pages and their local resources and anchors witho
 test('build excludes environment files, stale output, tests and server sources', () => {
   const published = files(output);
   const topLevel = [
-    ...pages, 'home.css', 'home.js', 'app.js', 'styles.css', 'presentation.js', 'portal.css', 'portal.js',
+    ...pages, 'home.css', 'home.js', 'app.js', 'styles.css', 'presentation.js', 'portal.css', 'portal.js', 'canvas.js',
     'navigation-ui.js', 'navigation.css', 'navigation-demo.js', 'navigation-demo.css', 'study-audio.js',
     'study-audio.css', 'pricing.css', 'pricing.js', 'favicon.svg', 'auth-client.js', 'learning-content.js',
   ];
