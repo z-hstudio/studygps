@@ -1,0 +1,51 @@
+[
+  {
+    "url": "/",
+    "status": 200,
+    "matchesSource": true,
+    "cloudflareChallengeExcluded": true
+  },
+  {
+    "url": "/pricing.html?lang=en",
+    "status": 200,
+    "matchesSource": true,
+    "cloudflareChallengeExcluded": true
+  },
+  {
+    "url": "/portal.html?lang=en",
+    "status": 200,
+    "matchesSource": true,
+    "cloudflareChallengeExcluded": true
+  },
+  {
+    "url": "/demo.html?lang=zh",
+    "status": 200,
+    "matchesSource": true,
+    "cloudflareChallengeExcluded": true
+  },
+  {
+    "url": "/canvas.js",
+    "status": 200,
+    "matchesSource": true,
+    "cloudflareChallengeExcluded": false
+  },
+  {
+    "deployment": {
+      "host": "cloudflare",
+      "source": "44fe817d8bfac47ff60fae670680bc87227a61c8",
+      "accountConfigured": false
+    }
+  },
+  {
+    "navigation": true
+  },
+  {
+    "liveEngineMatchesExpected": true
+  },
+  {
+    "accountConfigured": false
+  },
+  {
+    "anonymousPortalStatus": 401
+  }
+]
