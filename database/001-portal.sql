@@ -52,3 +52,12 @@ CREATE INDEX IF NOT EXISTS studygps_advice_student_idx ON studygps_advice(studen
 
 -- Explicit fixture provenance, never writable through the public profile API.
 ALTER TABLE studygps_profiles ADD COLUMN IF NOT EXISTS is_demo BOOLEAN NOT NULL DEFAULT false;
+
+-- Navigation preferences and block completion are distinct from assessment
+-- scores and core remedial-task completion. No identity or role is stored here.
+CREATE TABLE IF NOT EXISTS studygps_navigation (
+  student_id TEXT PRIMARY KEY REFERENCES studygps_profiles(user_id),
+  context JSONB CHECK (context IS NULL OR jsonb_typeof(context) = 'object'),
+  progress JSONB NOT NULL DEFAULT '{}'::jsonb CHECK (jsonb_typeof(progress) = 'object'),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

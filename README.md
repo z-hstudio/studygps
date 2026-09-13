@@ -1,6 +1,6 @@
 # StudyGPS
 
-StudyGPS turns topic assessment results into an explainable revision plan within a fixed time budget, with an adapter for n8n.
+StudyGPS is a learning navigator for university students: **what to study → when to study → how to study → continuous re-routing**. It turns assessment results, deadlines, teacher guidance and study availability into an explainable route, with an independent analysis-engine adapter for n8n.
 
 Built as a starting point for the n8n University Hackathon.
 
@@ -15,6 +15,18 @@ New accounts default to student. The deployment operator can configure `STUDYGPS
 Use Node.js 22: `npm ci`, configure `.env.local` from `.env.example`, then `npm run db:migrate`. `npm run dev` starts the local site at `http://127.0.0.1:3040`. `npm test` checks engine, HTTP, authentication, isolation and UI behavior; `npm run build` bundles only public assets and the public Clerk client. Secret keys and database URLs stay server-side. The pure analysis engine still works independently without Clerk, Neon or model credentials.
 
 For a live teacher presentation, see the [six synthetic classroom scenarios and two-minute bilingual walkthrough](docs/classroom-demo.md). The operator-only seed command targets a verified administrator classroom, labels synthetic records explicitly, and preserves existing data when rerun. It creates no Clerk login accounts.
+
+The website now defaults to English while preserving an explicit Chinese choice. The [learning-science navigation layer](docs/learning-science.md) combines assessment, deadlines, teacher feedback, progress, habits and explicitly linked goals into a 14-day route. Each block explains what, why now, when, how, duration and next review; saving new information replans the route. [Apple Health simulation](docs/apple-health.md) offers clearly synthetic sleep and blood-oxygen examples: short sleep reduces only today’s planned load, and oxygen is display-only. There is no live Apple Health connection or real health-data upload.
+
+The dated route uses **Priority = Weakness × Impact × Urgency** as its primary topic order. Weakness is the gap to the student's reference target, Impact is the configured course weight, and Urgency comes from the nearest upcoming relevant deadline. Teacher guidance, progress and linked goals break equal-priority ties; they cannot override a higher formula score. Missing scores remain unknown. See the [rules, intervals and API contract](docs/learning-science.md).
+
+The [interactive route demo](https://studygps-five.vercel.app/demo.html#navigation-demo) runs this same planner with fictional students. Change the assessment, deadline, synthetic sleep or feedback; simulate completion to see the next step. `GET /api/navigation-demo` accepts only documented scenario choices and never reads or changes account records. Its clock is explicitly fixed to noon on the current Sydney calendar date, so it can be presented at any time of day. Private routes use actual time.
+
+[Pocket TTS study guides](docs/voice.md) are four real, pre-generated English audio files with Chinese transcripts, playback speed, pause and error recovery. Personal dates and priority remain in the live task, not in these public recordings. No live TTS service, microphone recording or voice cloning is used.
+
+The separate bilingual [pricing page](https://studygps-five.vercel.app/pricing.html) presents proposed USD Silver ($29.99), Gold ($44.99) and Platinum ($79.99) subscriptions and an illustrative cost calculator. These are planned offers: checkout, billing, paid-tier enforcement, premium model routing and premium channels are not connected. The cost ranges are assumptions rather than measured margins.
+
+See the [product audit and repeatable presentation flow](docs/product-audit.md) for screen-by-screen findings, corrections, final scores and verification limits.
 
 ## Thermodynamics demo and API
 

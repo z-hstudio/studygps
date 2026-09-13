@@ -74,7 +74,7 @@ function createRepository({ env = process.env, sql: injectedSql } = {}) {
         id: row.user_id, name: row.name, email: row.email, goal: row.goal, isDemo: row.is_demo === true,
         overallScore: row.overall_score === null ? null : Number(row.overall_score),
         completedTasks: row.completed_task_ids?.length ?? 0, totalTasks: row.priorities?.length ?? 0,
-        focusTopic: row.priorities?.[0]?.topic_id ?? null, updatedAt: iso(row.updated_at),
+        focusTopic: row.priorities?.[0]?.topic_id ?? null, focusBasis: 'assessment', updatedAt: iso(row.updated_at),
       }));
     },
     async getLearning(studentId) {
@@ -92,6 +92,37 @@ function createRepository({ env = process.env, sql: injectedSql } = {}) {
         completedTaskIds: row.completed_task_ids, updatedAt: iso(row.updated_at),
         history: row.history.map((entry) => ({ id: entry.id, createdAt: iso(entry.created_at), overallScore: entry.overall_score })),
       };
+    },
+    async getNavigation(studentId) {
+      const sql = db();
+      const rows = await sql`SELECT context, progress FROM studygps_navigation WHERE student_id=${studentId}`;
+      return rows[0] ? { context: rows[0].context, progress: rows[0].progress } : { context: null, progress: {} };
+    },
+    async saveNavigationContext(studentId, context) {
+      const sql = db();
+      await sql`INSERT INTO studygps_navigation (student_id, context) VALUES (${studentId}, ${JSON.stringify(context)}::jsonb)
+        ON CONFLICT (student_id) DO UPDATE SET context=EXCLUDED.context, updated_at=now()`;
+    },
+    async completeNavigationSession(studentId, sessionId, completed, completedAt, durationMinutes, assessmentId) {
+      const sql = db();
+      const value = JSON.stringify({ completed, completedAt: completed ? completedAt : null, durationMinutes });
+      // Update just this key, preserving simultaneous completions of other blocks.
+      // Repeating a completed=true request keeps the original completion instant.
+      // Serialize with reassessment writes on this learner's current plan. A
+      // stale request must not add obsolete progress to today's study budget.
+      const rows = await sql`WITH current_learning AS (
+          SELECT student_id FROM studygps_learning
+          WHERE student_id=${studentId} AND plan->>'assessment_id'=${assessmentId}
+          FOR UPDATE
+        )
+        INSERT INTO studygps_navigation (student_id, progress)
+        SELECT student_id, jsonb_build_object(${sessionId}::text, ${value}::jsonb) FROM current_learning WHERE true
+        ON CONFLICT (student_id) DO UPDATE SET progress = CASE
+          WHEN ${completed} AND studygps_navigation.progress #>> ARRAY[${sessionId}::text, 'completed'] = 'true'
+            THEN studygps_navigation.progress
+          ELSE jsonb_set(studygps_navigation.progress, ARRAY[${sessionId}::text], ${value}::jsonb, true)
+        END, updated_at=now() RETURNING student_id`;
+      if (!rows.length) throw portalError(409, 'PLAN_CHANGED', 'Your assessment changed while saving this study block. Refresh and try again.');
     },
     async saveAssessment(studentId, values) {
       const sql = db();

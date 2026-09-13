@@ -4,10 +4,14 @@ const L = window.StudyGPSLearning;
 const $ = id => document.getElementById(id);
 const scoreInputs = Array.from(document.querySelectorAll('[data-topic]'));
 let savedLocale;
-try { savedLocale = localStorage.getItem('studygps.locale'); } catch { /* Preference storage is optional. */ }
+try {
+  const current = localStorage.getItem('studygps-locale');
+  const legacy = localStorage.getItem('studygps.locale');
+  savedLocale = ['en','zh'].includes(current) ? current : ['en','zh'].includes(legacy) ? legacy : null;
+} catch { /* Preference storage is optional. */ }
 const queryLocale = new URLSearchParams(location.search).get('lang');
 const state = {
-  locale: ['en','zh'].includes(queryLocale) ? queryLocale : savedLocale === 'en' ? 'en' : 'zh',
+  locale: ['en','zh'].includes(queryLocale) ? queryLocale : savedLocale || 'en',
   request:null, plan:null, renderedPlan:null, renderedRequest:null, reference:null,
   mode:'loading', busy:false, error:null, proofs:[], proofError:false, learning:null
 };
@@ -38,9 +42,10 @@ function applyLocale(locale, persist = false) {
   for (const el of document.querySelectorAll('[data-i18n-aria]')) el.setAttribute('aria-label',tr(el.dataset.i18nAria));
   for (const el of document.querySelectorAll('[data-i18n-placeholder]')) el.placeholder = tr(el.dataset.i18nPlaceholder);
   for (const el of document.querySelectorAll('[data-locale]')) el.setAttribute('aria-pressed',String(el.dataset.locale === locale));
+  for (const link of document.querySelectorAll('a.brand')) link.href = '/?lang=' + locale;
   document.querySelector('[data-i18n="downloadHandoff"]').href = locale === 'en' ? '/downloads/HANDOFF.en.md' : '/downloads/HANDOFF.md';
   if (persist) {
-    try { localStorage.setItem('studygps.locale',locale); } catch { /* Private mode may disallow storage. */ }
+    try { localStorage.setItem('studygps-locale',locale); localStorage.setItem('studygps.locale',locale); } catch { /* Private mode may disallow storage. */ }
     const url = new URL(location.href); url.searchParams.set('lang',locale);
     history.replaceState(null,'',url);
   }
