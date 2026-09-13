@@ -51,6 +51,50 @@ test('deadline, sleep, teacher feedback, completion and reassessment reroute the
   assert.equal(call().body.navigation.sessions.filter(s => s.completed).length, 0);
 });
 test('public demo accepts only finite presets and refuses real identities, health values and writes', () => {
-  for (const query of ['?studentId=someone', '?sleep=5.2', '?preset=alex1&preset=sarah1', '?urgency=-1', '?context={}']) assert.equal(call(query).statusCode, 400);
+  for (const query of ['?studentId=someone', '?sleep=5.2', '?preset=alex1&preset=sarah1', '?urgency=-1', '?context={}', '?lang=fr', '?lang=zh-CN', '?lang=en&lang=zh']) assert.equal(call(query).statusCode, 400);
   assert.equal(call('', 'POST').statusCode, 405);
+});
+
+
+test('public demo defaults to English and localizes authored scenario fields before generating route explanations', () => {
+  const en = call('?urgency=soon&feedback=units').body;
+  const zh = call('?urgency=soon&feedback=units&lang=zh').body;
+  assert.equal(en.locale, 'en'); assert.equal(zh.locale, 'zh');
+  assert.equal(en.context.deadlines[0].title, 'Second-law assignment');
+  assert.equal(zh.context.deadlines[0].title, '第二定律作业');
+  assert.equal(en.context.interests, 'Power stations and energy efficiency');
+  assert.equal(zh.context.interests, '发电站与能源效率');
+  assert.match(zh.context.semesterGoal, /解释能源系统/);
+  assert.match(zh.context.careerGoal, /可持续工程/);
+  const texts = (body, language) => JSON.stringify({
+    learner: body.learner, context: body.context,
+    sessions: body.navigation.sessions.map(session => ({
+      title: session.title[language], why: session.why.map(item => item[language]),
+      steps: session.steps.map(item => item[language]), deadline: session.deadline,
+    })),
+    signals: body.navigation.signals.map(signal => ({ label: signal.label[language], value: signal.value[language] })),
+  });
+  assert.doesNotMatch(texts(en, 'en'), /[\p{Script=Han}]/u);
+  assert.match(texts(en, 'en'), /Check the units and explain what a positive entropy change means/);
+  assert.match(texts(zh, 'zh'), /核对单位，并解释正熵变的含义/);
+  assert.match(texts(zh, 'zh'), /解释效率上限，并在每一步计算中标明单位/);
+  assert.doesNotMatch(texts(zh, 'zh'), /Second-law assignment|Explain energy systems|Explore sustainable engineering|Power stations|Check the units/);
+});
+
+test('language selection never changes priority, session identity, scheduling or simulated completion', () => {
+  const structure = body => ({
+    score: body.overallScore, clock: body.simulationClock,
+    sessions: body.navigation.sessions.map(({ id, topicId, kind, priority, date, time, durationMinutes, breakMinutes, completed, canComplete, nextReviewDate }) =>
+      ({ id, topicId, kind, priority, date, time, durationMinutes, breakMinutes, completed, canComplete, nextReviewDate })),
+  });
+  for (const preset of ['alex1', 'alex2', 'sarah1']) {
+    for (const urgency of ['none', 'today', 'soon', 'later']) {
+      for (const completed of ['0', '1']) {
+        const query = `?preset=${preset}&urgency=${urgency}&completed=${completed}&feedback=units&sleep=short_sleep`;
+        const en = call(query + '&lang=en').body;
+        const zh = call(query + '&lang=zh').body;
+        assert.deepEqual(structure(en), structure(zh), query);
+      }
+    }
+  }
 });

@@ -127,6 +127,40 @@ function getButton(document, label) {
   return button;
 }
 
+test('portal requests the selected locale for roster and student detail', async t => {
+  for (const locale of ['en', 'zh']) {
+    const app = await launch(t, { view: teacherView(), url: `https://studygps.example/portal.html?lang=${locale}` });
+    app.document.querySelector('[data-student-id]').click();
+    await tick(); await tick();
+    const reads = app.requests.filter(entry => entry.settings.method !== 'POST');
+    assert.ok(reads.some(entry => entry.url.includes('studentId=')));
+    assert.ok(reads.every(entry => new URL(entry.url, 'https://studygps.example').searchParams.get('lang') === locale));
+  }
+});
+
+test('Alex presentation link selects only an authorised synthetic classroom student', async t => {
+  const id = 'demo_studygps_0123456789abcdef0123_alex-chen';
+  const view = teacherView();
+  view.students.unshift({ ...user(id), name: 'Alex Chen', isDemo: true });
+  const app = await launch(t, { view, url: 'https://studygps.example/portal.html?lang=en&demo=alex#student-detail' });
+  assert.equal(app.document.querySelector('.student-card.selected')?.dataset.studentId, id);
+  assert.ok(app.requests.some(entry => entry.url.includes('studentId=' + id)));
+
+  for (const isolatedView of [teacherView(), studentView()]) {
+    const isolated = await launch(t, { view: isolatedView, url: 'https://studygps.example/portal.html?lang=en&demo=alex' });
+    assert.ok(!isolated.requests.some(entry => entry.url.includes('studentId=')));
+  }
+  view.students[0].isDemo = false;
+  const real = await launch(t, { view, url: 'https://studygps.example/portal.html?lang=en&demo=alex' });
+  assert.ok(!real.requests.some(entry => entry.url.includes('studentId=')));
+});
+
+test('Alex presentation destination survives sign-in and signup', async t => {
+  const app = await launch(t, { signedOut: true, url: 'https://studygps.example/portal.html?lang=en&demo=alex#student-detail' });
+  assert.equal(app.clerk.signInProps.forceRedirectUrl, '/portal.html?lang=en&demo=alex#student-detail');
+  assert.equal(app.clerk.signInProps.signUpUrl, '/portal.html?lang=en&demo=alex&mode=signup');
+});
+
 test('student assessment uses the documented shape, preserves unassessed null, and cannot choose an owner', async t => {
   const app = await launch(t);
   const { document, w } = app;

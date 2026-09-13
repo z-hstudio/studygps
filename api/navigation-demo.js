@@ -7,7 +7,20 @@ const INPUTS = {
   alex2: require('../engine/examples/alex-assessment-2.input.json'),
   sarah1: require('../engine/examples/sarah-assessment-1.input.json'),
 };
-const names = { alex1: 'Alex · Assessment 1', alex2: 'Alex · Assessment 2', sarah1: 'Sarah · Assessment 1' };
+const copy = {
+  en: {
+    names: { alex1: 'Alex · Assessment 1', alex2: 'Alex · Assessment 2', sarah1: 'Sarah · Assessment 1' },
+    semesterGoal: 'Explain energy systems and show clear reasoning', careerGoal: 'Explore sustainable engineering', interests: 'Power stations and energy efficiency',
+    deadlineTitle: 'Second-law assignment', requirements: 'Explain the efficiency limit and show each calculation with units.',
+    advice: 'Check the units and explain what a positive entropy change means.',
+  },
+  zh: {
+    names: { alex1: 'Alex · 第一次测评', alex2: 'Alex · 更新测评后', sarah1: 'Sarah · 第一次测评' },
+    semesterGoal: '解释能源系统，并清楚展示推理过程', careerGoal: '探索可持续工程方向', interests: '发电站与能源效率',
+    deadlineTitle: '第二定律作业', requirements: '解释效率上限，并在每一步计算中标明单位。',
+    advice: '核对单位，并解释正熵变的含义。',
+  },
+};
 const TIMEZONE = 'Australia/Sydney';
 
 function demoClock(now) {
@@ -31,9 +44,11 @@ function createNavigationDemoHandler({ now = () => new Date() } = {}) {
     const send = (status, body) => { res.statusCode = status; res.end(JSON.stringify(body)); };
     if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); return send(405, { error: 'Use GET to explore synthetic navigation.' }); }
     const query = new URL(req.url, 'https://studygps.invalid').searchParams;
-    const choices = { preset: ['alex1', 'alex2', 'sarah1'], urgency: ['none', 'today', 'soon', 'later'], sleep: ['off', 'rested', 'short_sleep', 'no_data'], feedback: ['none', 'units'], completed: ['0', '1'] };
+    const choices = { preset: ['alex1', 'alex2', 'sarah1'], urgency: ['none', 'today', 'soon', 'later'], sleep: ['off', 'rested', 'short_sleep', 'no_data'], feedback: ['none', 'units'], completed: ['0', '1'], lang: ['en', 'zh'] };
     if ([...query].some(([key, value]) => !Object.hasOwn(choices, key) || !choices[key].includes(value) || query.getAll(key).length > 1)) return send(400, { error: 'Choose only the supported fictional scenarios.' });
     const preset = query.get('preset') || 'alex1';
+    const locale = query.get('lang') || 'en';
+    const text = copy[locale];
     const urgency = query.get('urgency') || 'none';
     const healthDemo = query.get('sleep') || 'off';
     const { timestamp, simulationClock } = demoClock(now());
@@ -42,15 +57,15 @@ function createNavigationDemoHandler({ now = () => new Date() } = {}) {
     const input = INPUTS[preset];
     const plan = generateStudyPlan(input, course);
     const context = {
-      semesterGoal: 'Explain energy systems and show clear reasoning', careerGoal: 'Explore sustainable engineering', interests: 'Power stations and energy efficiency',
+      semesterGoal: text.semesterGoal, careerGoal: text.careerGoal, interests: text.interests,
       preferredMethod: 'mixed', focusMinutes: 25, healthDemo,
       availability: { days: [1, 2, 3, 4, 5, 6, 7], startTime: '18:00', minutesPerDay: 120 },
       goalTopics: [], careerTopics: [], feedback: '', feedbackTopics: [],
       topicProgress: Object.fromEntries(course.topics.map(topic => [topic.topic_id, 'learning'])),
-      deadlines: urgency === 'none' ? [] : [{ id: 'demo-second-law-deadline', title: 'Second-law assignment · 第二定律作业', kind: 'assignment', dueDate, dueTime: '21:00', topicIds: ['second_law'], requirements: 'Explain the efficiency limit and show each calculation with units.' }],
+      deadlines: urgency === 'none' ? [] : [{ id: 'demo-second-law-deadline', title: text.deadlineTitle, kind: 'assignment', dueDate, dueTime: '21:00', topicIds: ['second_law'], requirements: text.requirements }],
     };
     const learning = { scores: input.topic_scores, targetScore: input.target_score, minutes: input.available_minutes, completedTaskIds: [], plan, updatedAt: timestamp.toISOString() };
-    const advice = query.get('feedback') === 'units' ? [{ focusTopic: 'entropy', message: 'Check the units and explain what a positive entropy change means. 核对单位，并解释正熵变的含义。', createdAt: timestamp.toISOString() }] : [];
+    const advice = query.get('feedback') === 'units' ? [{ focusTopic: 'entropy', message: text.advice, createdAt: timestamp.toISOString() }] : [];
     const args = { learning, profile: { timezone: 'Australia/Sydney' }, context, advice, now: timestamp, progress: {} };
     let navigation = buildNavigation(args);
     if (query.get('completed') === '1') {
@@ -60,7 +75,7 @@ function createNavigationDemoHandler({ now = () => new Date() } = {}) {
         navigation = buildNavigation(args);
       }
     }
-    return send(200, { source: 'synthetic', persisted: false, simulationClock, learner: names[preset], overallScore: plan.overall_score, context, navigation });
+    return send(200, { source: 'synthetic', persisted: false, locale, simulationClock, learner: text.names[preset], overallScore: plan.overall_score, context, navigation });
   };
 }
 module.exports = createNavigationDemoHandler();
