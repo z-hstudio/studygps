@@ -72,9 +72,11 @@ function createPortalHandler({ authenticate = createAuthenticator(), repository 
       const actor = await authenticate(req);
       if (!actor?.id || !['student', 'teacher'].includes(actor.role)) throw portalError(401, 'AUTH_INVALID', 'Sign in to access your workspace.');
       const url = new URL(req.url || '/api/portal', 'https://studygps.invalid');
-      if ([...url.searchParams.keys()].some((key) => key !== 'studentId') || url.searchParams.getAll('studentId').length > 1) throw portalError(400, 'VALIDATION_ERROR', 'Unsupported query parameters.');
-      if (req.method === 'POST' && url.searchParams.has('studentId')) throw portalError(400, 'VALIDATION_ERROR', 'Mutation targets belong in the validated action body.');
-      const result = req.method === 'GET' ? await service.view(actor, url.searchParams.has('studentId') ? url.searchParams.get('studentId') : null) : await service.mutate(actor, payload);
+      if ([...url.searchParams.keys()].some((key) => !['studentId', 'lang'].includes(key)) || ['studentId', 'lang'].some(key => url.searchParams.getAll(key).length > 1)) throw portalError(400, 'VALIDATION_ERROR', 'Unsupported query parameters.');
+      const locale = url.searchParams.get('lang');
+      if (locale !== null && !['en', 'zh'].includes(locale)) throw portalError(400, 'VALIDATION_ERROR', 'Choose English or Chinese.');
+      if (req.method === 'POST' && url.searchParams.size) throw portalError(400, 'VALIDATION_ERROR', 'Mutation targets belong in the validated action body.');
+      const result = req.method === 'GET' ? await service.view(actor, url.searchParams.has('studentId') ? url.searchParams.get('studentId') : null, locale) : await service.mutate(actor, payload);
       send(res, 200, result);
     } catch (error) {
       const expected = error instanceof PortalError;

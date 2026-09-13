@@ -26,3 +26,5 @@ Thumbs.db
 .vercel/
 public/
 .env*.local
+.playwright-cli/
+output/playwright/

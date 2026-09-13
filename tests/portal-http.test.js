@@ -128,6 +128,20 @@ test('request query cannot choose another owner or smuggle duplicate target IDs'
   assert.equal((await call({ method: 'POST', url: `/api/portal?studentId=${actors.studentB.id}`, body: assessment() })).statusCode, 400);
 });
 
+test('read locale is validated and cannot change identity or mutation scope', async () => {
+  const { call } = fixture();
+  for (const lang of ['en', 'zh']) {
+    const response = await call({ url: `/api/portal?lang=${lang}` });
+    assert.equal(response.statusCode, 200);
+    assert.equal(response.body.user.id, actors.studentA.id);
+    assert.equal((await call({ url: `/api/portal?lang=${lang}&studentId=${actors.studentB.id}` })).statusCode, 403);
+  }
+  for (const query of ['lang=fr', 'lang=', 'lang=en&lang=zh']) {
+    assert.equal((await call({ url: `/api/portal?${query}` })).statusCode, 400);
+  }
+  assert.equal((await call({ method: 'POST', url: '/api/portal?lang=en', body: assessment() })).statusCode, 400);
+});
+
 test('unexpected database errors never leak SQL, credentials or stack traces', async () => {
   const { call, repository } = fixture();
   repository.ensureProfile = async () => { throw Object.assign(new Error('postgres://user:secret@db.example SELECT private_record'), { status: 503, code: 'UPSTREAM_PRIVATE' }); };

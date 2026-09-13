@@ -148,7 +148,7 @@ function createPortalService({ repository, uuid = randomUUID, invitation = () =>
     return student;
   }
   return {
-    async view(actor, requestedStudentId = null) {
+    async view(actor, requestedStudentId = null, locale = null) {
       if (requestedStudentId !== null) requireRole(actor, 'teacher');
       // Identity is already verified. These independent reads do not need to wait
       // for the profile's email/role synchronization to complete.
@@ -170,7 +170,8 @@ function createPortalService({ repository, uuid = randomUUID, invitation = () =>
       user.role = actor.role;
       const context = storedNavigation.context;
       const navigation = student || actor.role === 'student' ? navigationBuilder({ learning, profile: student || user, context, progress: storedNavigation.progress, advice, now: now() }) : null;
-      return { user, classroom, students, learning, advice, context, navigation, recommendation: recommendation(learning, navigation), ...(student ? { student } : {}) };
+      const view = { user, classroom, students, learning, advice, context, navigation, recommendation: recommendation(learning, navigation), ...(student ? { student } : {}) };
+      return require('./demo-localization').projectDemoView(view, locale);
     },
     async mutate(actor, payload) {
       if (!isRecord(payload) || typeof payload.action !== 'string') throw invalid('A supported action is required.');

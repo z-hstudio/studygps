@@ -42,7 +42,7 @@ function setup(t, options = {}) {
 
 test('the lab sends supported settings to the real API and reuses the compact route with four upcoming blocks', async t => {
   const app = setup(t); await settle();
-  assert.deepEqual(app.query(), { preset: 'alex1', urgency: 'none', sleep: 'off', feedback: 'none', completed: '0' });
+  assert.deepEqual(app.query(), { preset: 'alex1', urgency: 'none', sleep: 'off', feedback: 'none', completed: '0', lang: 'en' });
   assert.equal(new URL(app.calls[0].url, app.w.location.href).pathname, '/api/navigation-demo');
   assert.equal(app.find('#navigation-demo').getAttribute('aria-busy'), 'false');
   assert.match(app.find('#lab-status').textContent, /Route updated/);
@@ -61,7 +61,7 @@ test('the lab sends supported settings to the real API and reuses the compact ro
 test('every control updates exact API parameters; changing the situation resets simulated completion', async t => {
   const app = setup(t); await settle();
   for (const [key, value] of [['preset', 'alex2'], ['urgency', 'soon'], ['sleep', 'short_sleep'], ['feedback', 'units']]) { app.change(key, value); await settle(); }
-  assert.deepEqual(app.query(), { preset: 'alex2', urgency: 'soon', sleep: 'short_sleep', feedback: 'units', completed: '0' });
+  assert.deepEqual(app.query(), { preset: 'alex2', urgency: 'soon', sleep: 'short_sleep', feedback: 'units', completed: '0', lang: 'en' });
   const checkbox = app.find('.lab-complete input'); checkbox.click(); await settle();
   assert.equal(app.query().completed, '1');
   assert.ok(app.renders.at(-1).navigation.sessions.every(session => !session.completed));
@@ -87,7 +87,7 @@ test('a newer situation aborts the pending request and a late old response canno
 });
 
 test('network failure keeps settings and a localized retry recovers the same situation', async t => {
-  const app = setup(t, { fetch: (url, settings, count) => count < 3 ? Promise.reject(new Error('Offline')) : Promise.resolve(apiResponse(url)) });
+  const app = setup(t, { fetch: (url, settings, count) => count < 4 ? Promise.reject(new Error('Offline')) : Promise.resolve(apiResponse(url)) });
   await settle(); app.change('sleep', 'short_sleep'); await settle();
   assert.match(app.find('#lab-status').textContent, /could not load/);
   assert.equal(app.find('#lab-retry').hidden, false);
@@ -96,32 +96,39 @@ test('network failure keeps settings and a localized retry recovers the same sit
   assert.match(app.find('#lab-status').textContent, /暂时无法加载/);
   assert.equal(app.find('#lab-retry').hidden, false);
   assert.equal(app.find('#lab-sleep').value, 'short_sleep');
-  assert.equal(app.calls.length, 2);
+  assert.equal(app.calls.length, 3);
   app.find('#lab-retry').click(); await settle();
-  assert.deepEqual(app.query(), { preset: 'alex1', urgency: 'none', sleep: 'short_sleep', feedback: 'none', completed: '0' });
+  assert.deepEqual(app.query(), { preset: 'alex1', urgency: 'none', sleep: 'short_sleep', feedback: 'none', completed: '0', lang: 'zh' });
   assert.match(app.find('#lab-status').textContent, /已依据当前选择/);
   assert.match(app.find('.lab-health-note').textContent, /今天的预算减半/);
   assert.equal(app.find('#lab-retry').hidden, true);
 });
 
-test('language changes during a pending request retain loading until that request actually completes', async t => {
-  const pending = deferred();
-  const app = setup(t, { fetch: () => pending.promise });
+test('language changes refetch localized scenario text and reject stale requests from the previous language', async t => {
+  const english = deferred(), chinese = deferred();
+  const app = setup(t, { fetch: (url, settings, count) => count === 1 ? english.promise : count === 2 ? chinese.promise : Promise.resolve(apiResponse(url)) });
   app.w.document.documentElement.lang = 'zh'; await settle();
   assert.equal(app.find('#lab-status').textContent, '正在更新路线…');
   assert.equal(app.find('#navigation-demo').getAttribute('aria-busy'), 'true');
   assert.equal(app.find('#lab-result').childElementCount, 0);
-  assert.equal(app.calls.length, 1);
-  pending.resolve(apiResponse(app.calls[0].url)); await settle();
+  assert.equal(app.calls.length, 2);
+  assert.equal(app.calls[0].settings.signal.aborted, true);
+  assert.equal(app.query().lang, 'zh');
+  english.resolve(apiResponse(app.calls[0].url)); await settle();
+  assert.equal(app.find('#lab-result').childElementCount, 0);
+  assert.equal(app.find('#navigation-demo').getAttribute('aria-busy'), 'true');
+  chinese.resolve(apiResponse(app.calls[1].url)); await settle();
   assert.match(app.find('#lab-status').textContent, /已依据当前选择/);
   assert.equal(app.find('#navigation-demo').getAttribute('aria-busy'), 'false');
   assert.equal(app.renders.at(-1).locale, 'zh');
+  assert.match(app.renders.at(-1).context.interests, /发电站/);
   assert.match(app.find('.lab-metrics').textContent, /分钟/);
   assert.equal(app.find('.lab-links a').getAttribute('href'), '/portal.html?lang=zh');
   app.w.document.documentElement.lang = 'en'; await settle();
   assert.match(app.find('#lab-status').textContent, /Route updated/);
   assert.equal(app.renders.at(-1).locale, 'en');
-  assert.equal(app.calls.length, 1);
+  assert.equal(app.query().lang, 'en');
+  assert.equal(app.calls.length, 3);
 });
 
 test('compact planning notes are collapsed without discarding localized warnings or study instructions', async t => {
@@ -206,4 +213,45 @@ test('the route does not offer a dead jump button when only locked, completed or
     assert.equal(view.querySelector('.navigation-jump-link'), null);
     assert.ok(view.querySelector('.navigation-edit-link'));
   }
+});
+
+
+test('deadline and teacher guidance stay in the chosen language, including after a live language switch', async t => {
+  const app = setup(t); await settle();
+  app.change('urgency', 'soon'); await settle();
+  app.change('feedback', 'units'); await settle();
+  const english = app.find('#lab-result').textContent;
+  assert.match(english, /Second-law assignment/);
+  assert.match(english, /Check the units and explain what a positive entropy change means/);
+  assert.doesNotMatch(english, /[\p{Script=Han}]/u);
+  const ids = app.renders.at(-1).navigation.sessions.map(session => session.id);
+  app.w.document.documentElement.lang = 'zh-CN'; await settle();
+  assert.equal(app.query().lang, 'zh');
+  assert.equal(app.query().urgency, 'soon');
+  assert.equal(app.query().feedback, 'units');
+  assert.deepEqual(app.renders.at(-1).navigation.sessions.map(session => session.id), ids);
+  const chinese = app.find('#lab-result').textContent;
+  assert.match(chinese, /第二定律作业/);
+  assert.match(chinese, /核对单位，并解释正熵变的含义/);
+  assert.match(chinese, /发电站与能源效率/);
+  assert.doesNotMatch(chinese, /Second-law assignment|Check the units|Power stations and energy efficiency/);
+  app.w.document.documentElement.lang = 'en'; await settle();
+  assert.doesNotMatch(app.find('#lab-result').textContent, /[\p{Script=Han}]/u);
+});
+
+test('the Alex teacher link preserves language and explains the separate signed-in classroom example', async t => {
+  const app = setup(t); await settle();
+  assert.equal(app.find('#lab-teacher-link').getAttribute('href'), '/portal.html?lang=en&demo=alex#student-detail');
+  assert.equal(app.find('#lab-teacher-link').textContent, 'Open Alex in teacher workspace ↗');
+  assert.equal(app.find('#lab-teacher-link').getAttribute('aria-describedby'), 'lab-teacher-note');
+  assert.match(app.find('#lab-teacher-note').textContent, /Teacher sign-in required/);
+  assert.match(app.find('#lab-teacher-note').textContent, /separate synthetic classroom example/);
+  assert.match(app.find('#lab-teacher-note').textContent, /not saved/);
+  app.change('preset', 'sarah1'); await settle();
+  assert.match(app.find('#lab-teacher-link').textContent, /Alex/);
+  app.w.document.documentElement.lang = 'zh'; await settle();
+  assert.equal(app.find('#lab-teacher-link').getAttribute('href'), '/portal.html?lang=zh&demo=alex#student-detail');
+  assert.equal(app.find('#lab-teacher-link').textContent, '在教师空间查看 Alex ↗');
+  assert.match(app.find('#lab-teacher-note').textContent, /需要教师账号登录/);
+  assert.match(app.find('#lab-teacher-note').textContent, /不会保存/);
 });
