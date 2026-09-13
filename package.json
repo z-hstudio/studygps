@@ -12,7 +12,8 @@
     "test": "node --test tests/*.test.js engine/tests/*.test.js",
     "demo": "node engine/scripts/demo.js",
     "db:migrate": "node --env-file=.env.local scripts/migrate-db.js",
-    "demo:seed": "node --env-file=.env.local scripts/seed-classroom-demo.js"
+    "demo:seed": "node --env-file=.env.local scripts/seed-classroom-demo.js",
+    "build:cloudflare": "npm run build && node scripts/build-cloudflare.js"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

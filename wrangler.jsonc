@@ -1,0 +1,14 @@
+{
+  "name": "studygps",
+  "account_id": "033aca0a3cfc07e3b442d5056081cf89",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-09-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "keep_vars": true,
+  "vars": { "APP_ORIGIN": "https://study-gps.z-hstudio.com", "NODE_ENV": "production" },
+  "build": { "command": "npm run build:cloudflare" },
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/", "/api/*", "/portal", "/demo", "/pricing"], "html_handling": "none", "not_found_handling": "none" },
+  "observability": { "enabled": false }
+}
