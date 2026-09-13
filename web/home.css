@@ -26,3 +26,37 @@
 
 .mini-route-labels{display:grid;grid-template-columns:repeat(auto-fit,minmax(3em,1fr))}
 html[lang=en] .closing h2 em{display:block}
+
+/* A route is a sequence of decisions; research sits beside the product claims. */
+.route-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;margin:0 0 34px;padding:0;border:1px solid #d5ddd1;border-radius:14px;overflow:hidden;background:#eef1e7}
+.route-steps li{display:flex;align-items:center;gap:11px;padding:18px 20px;font-size:14px;font-weight:600;line-height:1.5;min-width:0}
+.route-steps li+li{border-left:1px solid #d5ddd1}
+.route-step-dot{flex:0 0 29px;display:grid;place-items:center;width:29px;height:29px;border:1px solid #b2bea7;border-radius:50%;font-size:11px;font-weight:500;color:#55634d}
+.route-steps li:last-child .route-step-dot{background:#cee982;border-color:#cee982;font-size:19px}
+.learning-science{background:#0c2025;color:#f3f5ec;padding-block:67px}
+.science-heading{display:flex;align-items:center;gap:20px}
+.science-mark{font-size:46px;line-height:1;color:#c9ed7d}
+.science-heading h2{font-size:clamp(25px,2.4vw,35px);font-weight:500;letter-spacing:-.035em;line-height:1.2;margin:0}
+.science-heading p{margin:9px 0 0;color:#c3cecb;font-size:15px;line-height:1.65}
+.science-principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:35px;border-block:1px solid #314347}
+.science-principles article{padding:28px 25px;min-width:0}
+.science-principles article:first-child{padding-left:0}
+.science-principles article:last-child{padding-right:0}
+.science-principles article+article{border-left:1px solid #314347}
+.science-number{color:#b7d889;font-size:12px;letter-spacing:.1em}
+.science-principles h3{font-size:19px;font-weight:500;line-height:1.4;letter-spacing:-.015em;margin:17px 0 9px}
+.science-principles p{font-size:15px;line-height:1.75;color:#c3cecb;margin:0}
+.science-sources{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:start;margin-top:24px}
+.science-sources>div{display:flex;flex-wrap:wrap;gap:8px 23px}
+.science-sources a{color:#d3ebaa;font-size:13px;line-height:1.8;text-decoration:underline;text-underline-offset:4px}
+.science-sources a:hover{color:#fff}
+.science-sources p{color:#c3cecb;font-size:12px;line-height:1.8;margin:0}
+.learning-science+.together{padding-top:100px}
+@media(max-width:900px){.route-steps li{padding:15px 12px;gap:8px}.science-principles{grid-template-columns:repeat(2,minmax(0,1fr))}.science-principles article{padding:24px}.science-principles article:nth-child(3){padding-left:0;border-left:0;border-top:1px solid #314347}.science-principles article:nth-child(4){border-top:1px solid #314347}.science-sources{grid-template-columns:1fr;gap:15px}.learning-science+.together{padding-top:80px}}
+@media(max-width:680px){.route-steps{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:25px}.route-steps li{padding:15px 13px;font-size:13px}.route-steps li:nth-child(3){border-left:0}.route-steps li:nth-child(n+3){border-top:1px solid #d5ddd1}.route-step-dot{flex-basis:25px;width:25px;height:25px;font-size:10px}.learning-science{padding-block:47px}.science-heading{gap:15px;align-items:flex-start}.science-mark{font-size:34px}.science-heading h2{font-size:28px}.science-heading p{font-size:14px}.science-principles{margin-top:27px}.science-principles article,.science-principles article:nth-child(4){padding:22px 15px}.science-principles h3{font-size:18px}.science-principles p{font-size:14px}.science-sources a{font-size:13px}.science-sources p{font-size:12px}.learning-science+.together{padding-top:72px}}
+
+.problem-frame{display:flex;align-items:flex-start;gap:28px;padding-top:68px}.problem-mark{font-size:39px;color:#6a8455;line-height:1}.problem-frame h2{font-size:clamp(23px,2.5vw,32px);line-height:1.35;letter-spacing:-.035em;max-width:820px}.problem-frame p{font-size:16px;color:#65736b;line-height:1.85;max-width:930px;margin-top:13px}.problem-frame+.approach{padding-top:75px}.priority-method{padding-bottom:70px}.priority-method h2{font-size:clamp(28px,3vw,40px);line-height:1.25;letter-spacing:-.04em;margin-top:16px}.priority-formula{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px;background:#10282d;color:#d8e5df;border-radius:7px;padding:28px 20px;margin-top:26px;font-size:clamp(17px,2vw,25px);line-height:1.5}.priority-formula strong{color:#d4f68b;font-weight:500}.priority-definitions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:24px}.priority-definitions p{font-size:14px;color:#52685c;line-height:1.9}.priority-rules,.priority-note{font-size:13px;color:#6a786d;line-height:1.9;margin-top:21px}.priority-example{display:grid;grid-template-columns:1.2fr 1fr 1fr;align-items:center;gap:24px;padding:23px 26px;background:#e9eedf;border:1px solid #d4dec7;border-radius:6px;margin-top:24px}.priority-example h3{font-size:19px;line-height:1.5;letter-spacing:-.02em}.priority-example>div>span{display:block;font-size:12px;color:#65795f}.priority-example>div>strong{display:block;font-size:19px;font-weight:500;color:#315436;margin-top:5px;font-variant-numeric:tabular-nums}.footer-pricing{font-size:13px;white-space:nowrap}.footer-pricing:hover{color:#4b6d3e}
+@media(max-width:900px){.priority-example{grid-template-columns:1fr 1fr}.priority-example h3{grid-column:1/-1}.site-footer .footer-inner{gap:20px}}
+@media(max-width:680px){.problem-frame{padding-top:45px;gap:16px}.problem-mark{font-size:28px}.problem-frame h2{font-size:25px}.problem-frame p{font-size:15px}.problem-frame+.approach{padding-top:58px}.priority-method{padding-bottom:49px}.priority-method .eyebrow{font-size:11px;letter-spacing:.04em}.priority-method h2{font-size:29px}.priority-formula{gap:8px;padding:22px 13px;font-size:16px}.priority-formula>span:first-child{flex-basis:100%;text-align:center}.priority-definitions{grid-template-columns:1fr;gap:13px;margin-top:20px}.priority-definitions p{font-size:14px}.priority-example{padding:19px;gap:17px}.priority-example h3{font-size:18px}.priority-example>div>strong{font-size:16px}.priority-example>div>span{font-size:11px}.priority-note,.priority-rules{font-size:12px}.site-footer .footer-pricing{order:2}.site-footer .footer-inner>a:last-child{order:2}.site-footer p{order:3}}
+
+.hero-actions{flex-wrap:wrap}

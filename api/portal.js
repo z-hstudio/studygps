@@ -4,7 +4,7 @@ const { createAuthenticator, allowedOrigins } = require('../server/auth');
 const { createRepository } = require('../server/repository');
 const { createPortalService } = require('../server/portal-service');
 const { portalError, PortalError } = require('../server/errors');
-const MAX_BODY_BYTES = 32 * 1024;
+const MAX_BODY_BYTES = 64 * 1024;
 
 function send(res, status, data) {
   res.statusCode = status;
@@ -13,7 +13,7 @@ function send(res, status, data) {
 }
 
 async function readBody(req) {
-  const tooLarge = () => portalError(413, 'PAYLOAD_TOO_LARGE', 'JSON request must not exceed 32 KiB.');
+  const tooLarge = () => portalError(413, 'PAYLOAD_TOO_LARGE', 'JSON request must not exceed 64 KiB.');
   const badJson = () => portalError(400, 'INVALID_JSON', 'Request body must contain valid JSON.');
   if (Number(req.headers['content-length']) > MAX_BODY_BYTES) { req.resume?.(); throw tooLarge(); }
   let supplied;

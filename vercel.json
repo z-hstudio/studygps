@@ -35,6 +35,10 @@
     {
       "source": "/demo",
       "destination": "/demo.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/pricing.html"
     }
   ]
 }

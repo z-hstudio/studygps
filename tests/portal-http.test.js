@@ -74,14 +74,29 @@ test('content type, malformed JSON, body shape and unsupported methods fail safe
   assert.equal(method.headers.allow, 'GET, POST');
 });
 
-test('32 KiB body limit covers declared, parsed, raw and streamed inputs including multibyte text', async () => {
+test('64 KiB body limit covers declared, parsed, raw and streamed inputs including multibyte text', async () => {
   const { call } = fixture();
-  const huge = { action: 'save-profile', name: 'A', goal: '中'.repeat(12000), timezone: 'UTC' };
-  for (const input of [{ body: {}, headers: { 'content-length': '32769' } }, { body: huge }, { body: JSON.stringify(huge) }, { chunks: [Buffer.from(JSON.stringify(huge))] }]) {
+  const huge = { action: 'save-profile', name: 'A', goal: '中'.repeat(22000), timezone: 'UTC' };
+  for (const input of [{ body: {}, headers: { 'content-length': '65537' } }, { body: huge }, { body: JSON.stringify(huge) }, { chunks: [Buffer.from(JSON.stringify(huge))] }]) {
     const result = await call({ method: 'POST', ...input });
     assert.equal(result.statusCode, 413);
     assert.equal(result.body.error.code, 'PAYLOAD_TOO_LARGE');
   }
+});
+test('a legal maximum-length bilingual deadline context fits the HTTP body limit', async () => {
+  const { call } = fixture();
+  const topicIds = ['first_law', 'second_law', 'entropy', 'rankine_cycle'];
+  const context = {
+    semesterGoal: '中'.repeat(500), careerGoal: '中'.repeat(300), interests: '中'.repeat(300),
+    feedback: '中'.repeat(1000), preferredMethod: 'mixed', focusMinutes: 25,
+    availability: { days: [1], startTime: '18:00', minutesPerDay: 60 },
+    goalTopics: topicIds, careerTopics: topicIds, feedbackTopics: topicIds,
+    topicProgress: Object.fromEntries(topicIds.map(id => [id, 'learning'])),
+    deadlines: Array.from({ length: 12 }, (_, index) => ({ id: `deadline-${index}`, title: '中'.repeat(160), kind: 'exam', dueDate: '2026-10-10', dueTime: '09:00', topicIds, requirements: '中'.repeat(1000) })),
+  };
+  const body = { action: 'save-navigation-context', context };
+  assert.ok(Buffer.byteLength(JSON.stringify(body)) > 32768);
+  assert.equal((await call({ method: 'POST', body })).statusCode, 200);
 });
 
 test('oversized chunked HTTP requests receive a JSON 413 without a destroyed socket', async (context) => {
@@ -98,7 +113,7 @@ test('oversized chunked HTTP requests receive a JSON 413 without a destroyed soc
     });
     req.on('error', reject);
     req.write('{"action":"save-profile","goal":"');
-    req.write('x'.repeat(40000));
+    req.write('x'.repeat(70000));
     req.end('"}');
   });
   assert.equal(result.status, 413);

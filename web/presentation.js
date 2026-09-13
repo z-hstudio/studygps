@@ -6,7 +6,7 @@
   // This module projects immutable engine results. Never translate the API contract.
   const strings = {
     zh: {
-      skip:'跳到测评输入', language:'界面语言', planJson:'完整学习计划 JSON', navigation:'网站导航', navPlan:'学习驾驶舱', navStory:'为什么不同', navFlow:'自动化接力',
+      skip:'跳到学习导航', language:'界面语言', planJson:'完整学习计划 JSON', navigation:'网站导航', navPlan:'学习导航', navStory:'为什么不同', navFlow:'自动化接力',
       eyebrow:'学习导航 · 热力学演示', headline:'每一小时，都有方向。', intro:'你不缺资料。你需要知道：现在，先学哪一块。',
       introNote:'从知识点成绩出发，把有限时间变成下一步。', inputTitle:'设定你的起点', inputStep:'01 / 输入',
       presetLabel:'选择一个学习者', alex1:'Alex · 第一次测评', sarah1:'Sarah · 第一次测评', alex2:'Alex · 第二次测评',
@@ -64,7 +64,7 @@
       readOnlyResult:'上次结果', reasonConclusion:'按此规则排序，不代表预计提分。',
     },
     en: {
-      skip:'Skip to assessment inputs', language:'Interface language', planJson:'Complete study plan JSON', navigation:'Site navigation', navPlan:'Your workspace', navStory:'Why it is different', navFlow:'Automation handoff',
+      skip:'Skip to learning navigation', language:'Interface language', planJson:'Complete study plan JSON', navigation:'Site navigation', navPlan:'Learning navigation', navStory:'Why it is different', navFlow:'Automation handoff',
       eyebrow:'STUDY NAVIGATION · THERMODYNAMICS DEMO', headline:'Give every hour a direction.', intro:'You have the materials. Now know what to study next.',
       introNote:'Turn topic-level results into a next step that fits your time.', inputTitle:'Set your starting point', inputStep:'01 / INPUT',
       presetLabel:'Choose a learner', alex1:'Alex · Assessment 1', sarah1:'Sarah · Assessment 1', alex2:'Alex · Assessment 2',
